@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.SwipeRefreshLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/swipe">
+	<RelativeLayout 
+    	android:layout_width="fill_parent"
+    	android:layout_height="fill_parent"
+    	android:background="#FFFFFF"
+    	android:orientation="vertical" >
+    	<TextView 	android:id="@+id/static_date"
+	    			android:layout_width="match_parent"
+	    			android:layout_height="wrap_content"
+	    			android:textColor="@color/uchicago"
+	    			android:background="#F7F7F7"
+	    			android:textSize="20sp"
+	    			android:paddingLeft="15dp"
+	    			android:paddingTop="5dp" />
+		<ListView
+		    android:id="@android:id/list"
+	    	android:layout_width="match_parent"
+	    	android:layout_height="match_parent"
+	    	android:layout_below="@id/static_date"
+	    	android:divider="@null"
+	    	android:dividerHeight="-1dp"
+	    	android:background="#FFFFFF"/>
+	</RelativeLayout>
+</android.support.v4.widget.SwipeRefreshLayout>

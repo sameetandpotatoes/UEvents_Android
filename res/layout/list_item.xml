@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+			    android:layout_width="fill_parent"
+			    android:layout_height="wrap_content"
+			    android:orientation="horizontal"
+				android:background="@drawable/list_item_selector"
+			    android:descendantFocusability="blocksDescendants">
+ 	
+	<TextView 	android:id="@+id/new_date"
+	 	    	android:layout_width="match_parent"
+	 	    	android:layout_height="wrap_content"
+	 	    	android:textSize="20sp"
+	 	    	android:paddingLeft="15dp"
+	 	    	android:paddingTop="5dp"
+	 	    	android:background="#F7F7F7"
+	 	    	android:textColor="@color/uchicago" />
+	<RelativeLayout
+			    android:id="@+id/event"
+			    android:layout_width="match_parent"
+	    		android:layout_height="wrap_content"
+	    		android:orientation="horizontal">
+			    <com.sapra.uevents.Banner 
+				    android:id="@+id/list_image"
+				    android:src="@drawable/placeholder"
+					android:layout_width="fill_parent" 
+					android:layout_height="100dp"
+					android:scaleType="fitXY"
+					android:adjustViewBounds="true" />
+				<TextView
+				    android:id="@+id/when" 
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_alignBottom="@id/list_image"
+					android:drawableLeft="@drawable/clock25"
+					android:drawablePadding="5dip"
+					android:paddingLeft="10dp"
+					android:paddingRight="6dp"
+					android:layout_marginBottom="10dp"
+					android:textSize="16sp"
+					android:textColor="#FFFFFF" />
+				<TextView 
+				    android:id="@+id/where" 
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content" 
+				    android:layout_toRightOf="@id/when"
+				    android:drawableLeft="@drawable/loc25"
+				    android:drawablePadding="5dip"
+				    android:layout_alignBottom="@id/list_image"
+				    android:layout_marginLeft="5dp"
+				    android:layout_marginBottom="10dp"
+				    android:textSize="16sp"
+				    android:textColor="#FFFFFF"/>
+				<TextView
+				    android:id="@+id/name"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_above="@id/when"
+					android:layout_marginLeft="10dp"
+					android:layout_marginBottom="7dp"
+					android:textSize="24sp"
+					android:textColor="#FFFFFF" />
+			</RelativeLayout> 	    		 	
+</RelativeLayout>

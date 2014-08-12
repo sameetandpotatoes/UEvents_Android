@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">      
+    
+    <bool name="default_circle_indicator_centered">true</bool>
+    <color name="default_circle_indicator_fill_color">#d3d3d3</color>
+    <color name="default_circle_indicator_page_color">#00000000</color>
+    <integer name="default_circle_indicator_orientation">0</integer>
+    <dimen name="default_circle_indicator_radius">5dp</dimen>
+    <bool name="default_circle_indicator_snap">false</bool>
+    <color name="default_circle_indicator_stroke_color">#FFDDDDDD</color>
+    <dimen name="default_circle_indicator_stroke_width">2dp</dimen>
+    <attr name="vpiCirclePageIndicatorStyle" format="reference"/>
+    
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="light_gray">#d3d3d3</color>
+    <color name="dark_gray">#7f7f7f</color>
+    <color name="uchicago">#8f3931</color>
+    <color name="uchicago_secondary">#8a9045</color>
+    <color name="uchicago_dark">#762f28</color>
+	<color name="getstarted">#155F83</color>
+	<color name="getstarted_light">#1a74a0</color>
+</resources>
