@@ -53,15 +53,9 @@ public class EventsFragment extends Fragment {
 	}
 	public static final EventsFragment newInstance(String url, Session session, Context context, String tag){
 		EventsFragment ef = new EventsFragment();
-		ef.url = url;
-//		Log.i("Unformatted URL", ef.url);
-//		try{
-//			String decoded = URLDecoder.decode(ef.url, "UTF-8");
-//			Log.i("Formatted URL", decoded);
-//			ef.url = decoded;
-//		} catch(UnsupportedEncodingException e){
-//			e.printStackTrace();
-//		}
+		String noAnd = url.replaceAll(" & ", "%20%26%20");
+		String noSpaces = noAnd.replaceAll(" ", "%20");
+		ef.url = noSpaces;
 		ef.session = session;
 		ef.context = context;
 		ef.tag = tag;

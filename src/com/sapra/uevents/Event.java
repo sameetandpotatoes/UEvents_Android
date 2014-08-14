@@ -48,8 +48,8 @@ public class Event implements Parcelable {
 //			this.venue = object.getString("venue")
 			JSONArray tags = object.getJSONArray("tags");
 			for (int i = 0; i < tags.length(); i++){
-				String tag = tags.get(i).toString();
-				this.tags.add(tag);
+				JSONObject tag = tags.getJSONObject(i);
+				this.tags.add(tag.getString("name"));
 			}
 			this.cover_url = object.getString("primary_image_url");
 			this.url = object.getString("url");

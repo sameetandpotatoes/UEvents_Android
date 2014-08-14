@@ -45,16 +45,12 @@ public class LoginPage extends FragmentActivity {
     	Intent events = new Intent(getApplicationContext(), LoginUsingActivityActivity.class);
     	onTrimMemory(TRIM_MEMORY_UI_HIDDEN);
     	events.putExtra("Session", Session.getActiveSession());
-//    	events.putExtra("User ID", userId);
-//    	events.putExtra("School", universityName);
-//    	events.putExtra("Username", userName);
-//    	User.auth_token = auth_token;
     	startActivity(events);
     	finish();
     }
     public boolean postToAPI(){
         InputStream inputStream = null;
-        String result = "", school_id = "";
+        String result = "", school_id = "", school_name = "";
         Log.i("API", "Post to API");
         try {
 
@@ -101,14 +97,13 @@ public class LoginPage extends FragmentActivity {
                 JSONObject obj = new JSONObject(result);
                 User.authToken = ((JSONObject) obj.get("user")).getString("authentication_token");
                 school_id =((JSONObject) obj.get("user")).getString("school_id");
+                school_name =((JSONObject) obj.get("user")).getString("school_name");
                 Log.i("API", result);
-                System.out.println(school_id.equals("null"));
-                System.out.println(school_id == null);
                 if (school_id.equals("null"))
                 	return false;
                 else{
                 	User.schoolId = school_id;
-                	Log.i("API", school_id);
+                	User.schoolName = school_name;
                 	return true;
                 }
             }else{
@@ -149,9 +144,6 @@ public class LoginPage extends FragmentActivity {
 	public void university() {
 		Intent university = new Intent(getApplicationContext(), SchoolActivity.class);
     	onTrimMemory(TRIM_MEMORY_UI_HIDDEN);
-//    	university.putExtra("userId", userId);
-//    	university.putExtra("Username", userName);
-//    	university.putExtra("auth_token", auth_token);
     	startActivity(university);
     	finish();
 	}

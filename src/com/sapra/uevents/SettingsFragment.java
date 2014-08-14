@@ -25,9 +25,6 @@ public class SettingsFragment extends Fragment{
 	}
 	public static final SettingsFragment newInstance(){
 		SettingsFragment sf = new SettingsFragment();
-//		sf.userId = userId;
-//		sf.userName = userName;
-//		sf.schoolName = schoolName;
 		return sf;
 	}
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -37,7 +34,7 @@ public class SettingsFragment extends Fragment{
 			Typeface regular = LoginUsingActivityActivity.regular;
 			TextView school = (TextView) rootView.findViewById(R.id.school_selected);
 			school.setTextColor(Color.BLACK);
-			school.setText(User.schoolName + "\n" + User.name);
+			school.setText(User.name + "\n" + User.schoolName);
 			school.setTypeface(regular);
 			
 			MLRoundedImageView profilePictureView = (MLRoundedImageView) rootView.findViewById(R.id.fbProfilePictureView);

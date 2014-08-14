@@ -77,7 +77,6 @@ public class SingleListItem extends Activity{
         
         selectedEvent = (Event) i.getParcelableExtra("Event");
         activeSession = (Session) i.getExtras().getSerializable("Session");
-//        userId = i.getStringExtra("User ID");
         userId = User.id;
         
         String description = selectedEvent.getDescription();
@@ -134,37 +133,6 @@ public class SingleListItem extends Activity{
 					} else{
 						Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
 					}
-//					new Request(
-//			    		    activeSession,
-//			    		    "/"+selectedEvent.getID()+"/"+newStatus,
-//			    		    null,
-//			    		    HttpMethod.POST,
-//			    		    new Request.Callback() {
-//			    		        public void onCompleted(Response response) {
-//			    		        	if (response.getError() == null){
-//			    		        		if (selectedEvent.getStatus().equals("declined")){
-//			    		        			Toast.makeText(getApplicationContext(), "Not going to " + selectedEvent.getName(), Toast.LENGTH_SHORT).show();
-//			    		        		}else if (selectedEvent.getStatus().equals("attending")){	
-//			    		        			Toast.makeText(getApplicationContext(), "Going to " + selectedEvent.getName(), Toast.LENGTH_SHORT).show();
-//			    		        		} else{
-//			    		        			Toast.makeText(getApplicationContext(), "Interested in " + selectedEvent.getName(), Toast.LENGTH_SHORT).show();
-//			    		        		}
-//			    		        		((RadioButton) findViewById(R.id.notgoing)).setBackgroundColor(getResources().getColor(R.color.white));
-//			    		        		((RadioButton) findViewById(R.id.notgoing)).setTextColor(getResources().getColor(R.color.uchicago));
-//		    							((RadioButton) findViewById(R.id.interested)).setBackgroundColor(getResources().getColor(R.color.white));
-//		    							((RadioButton) findViewById(R.id.interested)).setTextColor(getResources().getColor(R.color.uchicago));
-//		    							((RadioButton) findViewById(R.id.going)).setBackgroundColor(getResources().getColor(R.color.white));
-//		    							((RadioButton) findViewById(R.id.going)).setTextColor(getResources().getColor(R.color.uchicago));
-//			    						((RadioButton) findViewById(checkedId)).setBackgroundColor(getResources().getColor(R.color.uchicago));
-//			    						((RadioButton) findViewById(checkedId)).setTextColor(getResources().getColor(R.color.white));
-//			    		        	}
-//			    		        	else{
-//			    		        		System.out.println(response.getError());
-//			    		        		Toast.makeText(getApplicationContext(), "Error with RSVP", Toast.LENGTH_SHORT).show();
-//			    		        	}
-//			    		        }
-//			    		    }
-//			    		).executeAsync();
 				}
 			}        	
         });
@@ -194,7 +162,7 @@ public class SingleListItem extends Activity{
         	TextView tvTag = new TextView(this);
         	tvTag.setLayoutParams(lparams);
         	tvTag.setTextColor(Color.BLACK);
-        	tvTag.setTextSize(20);
+        	tvTag.setTextSize(17);
         	tvTag.setGravity(Gravity.CENTER);
         	if (tag.equals("THISISAFILLER")){
         		tvTag.setText("");

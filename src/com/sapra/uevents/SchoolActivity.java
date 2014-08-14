@@ -41,8 +41,6 @@ public class SchoolActivity extends Activity{
 	private ListView listView;
 	private Map<String, String>  allUniv;
 	private Context context;
-//	private String userId, userName, auth_token;
-//	private String universityName;
 	private String schoolsURL;
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
@@ -59,9 +57,6 @@ public class SchoolActivity extends Activity{
         actionBar.setTitle(s);
         
         setContentView(R.layout.school);
-//        userId = (String) getIntent().getExtras().get("userId");
-//        userName = (String) getIntent().getExtras().get("Username");
-//        auth_token = (String) getIntent().getExtras().get("auth_token");
         listView = (ListView) this.findViewById(android.R.id.list);
         allUniv = new TreeMap<String, String>();
         
@@ -121,8 +116,6 @@ public class SchoolActivity extends Activity{
 	            // 10. convert inputstream to string
 	            if(inputStream != null){
 	                result = convertInputStreamToString(inputStream);
-	                Log.i("API", result);
-//	                JSONObject obj = new JSONObject(result);
 	            }
 	            return httpResponse.getStatusLine().getStatusCode() == 200;
 	        } catch (Exception e) {
@@ -155,10 +148,6 @@ public class SchoolActivity extends Activity{
     	Intent events = new Intent(getApplicationContext(), LoginUsingActivityActivity.class);
     	onTrimMemory(TRIM_MEMORY_UI_HIDDEN);
     	events.putExtra("Session", Session.getActiveSession());
-//    	events.putExtra("User ID", userId);
-//    	events.putExtra("School", universityName);
-//    	events.putExtra("Username", userName);
-//    	Constants.auth_token = auth_token;
     	startActivity(events);
     	finish();
     }
@@ -180,6 +169,8 @@ public class SchoolActivity extends Activity{
 		}
 		public void onPostExecute(Boolean success){
 			if (success){
+				//Add option for school not listed
+				allUniv.put("School Not Listed", "0");
 				schoolAdapter = new SchoolAdapter(context, allUniv);
 		        listView.setAdapter(schoolAdapter);
 		        schoolAdapter.notifyDataSetChanged();
