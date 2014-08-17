@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
+         android:id="@+id/cal26"
+         android:icon="@drawable/cal26"
+         android:showAsAction="ifRoom"
+         android:title="Calendar"/>
+    <item
          android:id="@+id/menu_item_share"
          android:icon="@drawable/share"
          android:showAsAction="ifRoom"

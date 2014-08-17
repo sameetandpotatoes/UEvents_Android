@@ -4,8 +4,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -17,11 +17,18 @@ import org.json.JSONObject;
 
 import android.app.ActionBar.LayoutParams;
 import android.app.Activity;
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.pm.LabeledIntent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.provider.CalendarContract.Events;
+import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
@@ -29,7 +36,6 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -50,14 +56,15 @@ public class SingleListItem extends Activity{
 	private Event selectedEvent;
 	private String userId;
 	private Typeface regular, bold;
+	private boolean alreadyCreatedEvent;
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getActionBar().setDisplayHomeAsUpEnabled(true);
         getActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor(getResources().getString(R.color.uchicago))));
         setContentView(R.layout.single_list_item_view);
-        regular = LoginUsingActivityActivity.regular;
-        bold  = LoginUsingActivityActivity.bold;
-        
+        regular = LoggedIn.regular;
+        bold  = LoggedIn.bold;
+        alreadyCreatedEvent = false;
         LinearLayout llTags = (LinearLayout) findViewById(R.id.tags);
         TextView txtDescription = (TextView) findViewById(R.id.lbl_desc);
         txtDescription.setTypeface(regular);
@@ -85,14 +92,14 @@ public class SingleListItem extends Activity{
         
         String name = selectedEvent.getName();
         String time = selectedEvent.getStart_time();
-        String start = DateFormatter.shortDate(selectedEvent.getStart_date());
+        String start = selectedEvent.getShortStartDate();
         String attending = selectedEvent.getAttending();
-//        String venue = selectedEvent.getVenue();
+//      String venue = selectedEvent.getVenue();
         ArrayList<String> tags = selectedEvent.getTags();
         event_id = selectedEvent.getID();
         getRSVPStatus();
         txtName.setText(name);
-        txtName.setTypeface(regular);
+        txtName.setTypeface(bold);
         txtName.setTextColor(getResources().getColor(R.color.white));
         txtDescription.setText(boldText("Details: \n\n",description));
         
@@ -115,6 +122,8 @@ public class SingleListItem extends Activity{
 					}
 					selectedEvent.setStatus(newStatus);
 					if (postToAPI()){
+						//Posted successfully
+						//Let's tell the user
 		        		if (selectedEvent.getStatus().equals("declined")){
 		        			Toast.makeText(getApplicationContext(), "Not going to " + selectedEvent.getName(), Toast.LENGTH_SHORT).show();
 		        		}else if (selectedEvent.getStatus().equals("attending")){	
@@ -141,14 +150,17 @@ public class SingleListItem extends Activity{
         	if (time == null)
         		txtStart.setText(start);
         	else
-        		txtStart.setText(time);
-        	txtStart.setTypeface(regular);
+        		txtStart.setText(start + " " + time);
+        	txtStart.setTypeface(bold);
+        	txtStart.setCompoundDrawablesWithIntrinsicBounds(R.drawable.clock25, 0, 0, 0);
+        	txtStart.setCompoundDrawablePadding(10);
         }
         if (location != null)
         {	
         	txtLoc.setCompoundDrawablesWithIntrinsicBounds(R.drawable.loc25, 0, 0, 0);
+        	txtLoc.setCompoundDrawablePadding(10);
         	txtLoc.setText(location); 
-        	txtLoc.setTypeface(regular);
+        	txtLoc.setTypeface(bold);
         }
 //        if (venue != null){
 //        	venue.setText(text)
@@ -175,7 +187,6 @@ public class SingleListItem extends Activity{
         	}
         	llTags.addView(tvTag, 0);
         }
-        cover.setBackgroundResource(R.drawable.placeholder);
         ImageLoader imageLoader = ImageLoader.getInstance();
         imageLoader.init(Constants.config);
         imageLoader.displayImage(cover_url, cover);
@@ -185,27 +196,20 @@ public class SingleListItem extends Activity{
         String result = "";
         Log.i("API", "Post to API");
         try {
-
             // 1. create HttpClient
             HttpClient httpclient = new DefaultHttpClient();
-
             // 2. make POST request to the given URL
             HttpPost httpPost = new HttpPost(ENVRouter.postRSVPURL(selectedEvent.getStatus(), selectedEvent.getID()));
 
             String json = "";
-
             // 3. build jsonObject
 	        JSONObject jsonObject = new JSONObject();
-
             // 4. convert JSONObject to JSON to String
             json = jsonObject.toString();
-
             // 5. set json to StringEntity
             StringEntity se = new StringEntity(json);
-
             // 6. set httpPost Entity
             httpPost.setEntity(se);
-
             // 7. Set some headers to inform server about the type of the content   
             httpPost.setHeader("Accept", "application/json");
             httpPost.setHeader("Content-type", "application/json");
@@ -215,7 +219,6 @@ public class SingleListItem extends Activity{
             Log.i("API", "SL: " + httpResponse.getStatusLine());
             // 9. receive response as inputStream
             inputStream = httpResponse.getEntity().getContent();
-
             // 10. convert inputstream to string
             if(inputStream != null){
                 result = convertInputStreamToString(inputStream);
@@ -241,7 +244,7 @@ public class SingleListItem extends Activity{
 
         inputStream.close();
         return result;
-    }   
+    }
     private void getRSVPStatus() {
     	new Request(
     		    activeSession,
@@ -327,13 +330,33 @@ public class SingleListItem extends Activity{
 	        	finish();
 	            return true;
 	        case R.id.menu_item_share:
-	        	Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
-	        	sharingIntent.setType("text/plain");
-	        	String shareBody = "Hey, I'm interested in " + selectedEvent.getName() + " at " + selectedEvent.getLocation() +" ("+selectedEvent.getStart_time()+"). Want to join me?\n\nFind more events with UEvents, available on the App Store and the Play Store.\n\n\n\n\nhttp://www.uevents.io";
-	        	sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "UEvents Invitation to " + selectedEvent.getName());
-	        	sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
-	        	startActivity(Intent.createChooser(sharingIntent, "Share via"));
+//	        	Intent sharingIntent = new Intent();
+//	        	sharingIntent.setAction(Intent.ACTION_SEND);
+//	        	sharingIntent.setType("message/rfc822");
+//	        	String shareBody = "Hey, I'm interested in " + selectedEvent.getRawName() + " at " + selectedEvent.getLocation() +" ("+selectedEvent.getStart_time()+"). Want to join me?\n\nFind more events with UEvents, available on the App Store and the Play Store.\n\n\n\n\nhttp://www.uevents.io";
+//	        	sharingIntent.putExtra(Intent.EXTRA_SUBJECT, "UEvents Invitation to " + selectedEvent.getRawName());
+//	        	sharingIntent.putExtra(Intent.EXTRA_TEXT, shareBody);
+//	        	startActivity(Intent.createChooser(sharingIntent, "Share via"));
+	        	shareEvent();
 	        	return true;
+	        case R.id.cal26:
+	        	if (!alreadyCreatedEvent){
+		        	Intent intent = new Intent(Intent.ACTION_INSERT);  
+		        	intent.setType("vnd.android.cursor.item/event");
+		        	intent.setData(Events.CONTENT_URI);
+		        	intent.putExtra(Events.TITLE, selectedEvent.getRawName());
+		        	intent.putExtra(Events.DESCRIPTION, selectedEvent.getDescription());
+		        	intent.putExtra("beginTime", DateFormatter.getTimeInMillis(selectedEvent.getRawStartTime()));
+		        	intent.putExtra("endTime", DateFormatter.getTimeInMillis(selectedEvent.getRawEndTime()));
+		        	intent.putExtra(Events.CALENDAR_ID, selectedEvent.getID());
+		        	intent.putExtra(Events.ALL_DAY, false);
+		        	if (!selectedEvent.getLocation().equals("No Location"))
+		        		intent.putExtra(Events.EVENT_LOCATION, selectedEvent.getLocation());
+		        	alreadyCreatedEvent = true;
+		        	startActivity(intent);
+	        	} else{
+	        		Toast.makeText(this, "You already created a reminder for this event", Toast.LENGTH_SHORT).show();
+	        	}
 	        default:
 	            return super.onOptionsItemSelected(item);
         }
@@ -360,5 +383,62 @@ public class SingleListItem extends Activity{
     public void onStop(){
     	super.onStop();
     	EasyTracker.getInstance(this).activityStop(this);
+    }
+    private void shareEvent(){
+        Resources resources = getResources();
+        String shareBody = "Hey, I'm interested in " + selectedEvent.getRawName() + " at " + 
+        					selectedEvent.getLocation() +" ("+selectedEvent.getStart_time()+"). "+
+        					"Want to join me?\n\nFind more events with UEvents, available on the App Store "+
+        					"and the Play Store.\n\n\n\n\nhttp://www.uevents.io";
+        String shareSubject = "UEvents Invitation to " + selectedEvent.getName();
+        Intent emailIntent = new Intent();
+        emailIntent.setAction(Intent.ACTION_SEND);
+        // Native email client doesn't currently support HTML, but it doesn't hurt to try in case they fix it
+        emailIntent.putExtra(Intent.EXTRA_TEXT, shareBody);
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, shareSubject);
+        emailIntent.setType("message/rfc822");
+
+        PackageManager pm = getPackageManager();
+        
+        Intent sendIntent = new Intent(Intent.ACTION_SEND);     
+        sendIntent.setType("text/plain");
+
+        Intent openInChooser = Intent.createChooser(emailIntent, "Share via");
+
+        List<ResolveInfo> resInfo = pm.queryIntentActivities(sendIntent, 0);
+        List<LabeledIntent> intentList = new ArrayList<LabeledIntent>();        
+        for (int i = 0; i < resInfo.size(); i++) {
+            // Extract the label, append it, and repackage it in a LabeledIntent
+            ResolveInfo ri = resInfo.get(i);
+            String packageName = ri.activityInfo.packageName;
+            if(packageName.contains("android.email")) {
+                emailIntent.setPackage(packageName);
+            } else if(packageName.contains("twitter") || packageName.contains("facebook") || packageName.contains("mms") || packageName.contains("android.gm")) {
+                Intent intent = new Intent();
+                intent.setComponent(new ComponentName(packageName, ri.activityInfo.name));
+                intent.setAction(Intent.ACTION_SEND);
+                intent.setType("text/plain");
+                if(packageName.contains("twitter")) {
+                    intent.putExtra(Intent.EXTRA_TEXT, shareBody);
+                } else if(packageName.contains("facebook")) {
+                    // Warning: Facebook IGNORES our text. They say "These fields are intended for users to express themselves. Pre-filling these fields erodes the authenticity of the user voice."
+                    // One workaround is to use the Facebook SDK to post, but that doesn't allow the user to choose how they want to share. We can also make a custom landing page, and the link
+                    // will show the <meta content ="..."> text from that page with our link in Facebook.
+                    intent.putExtra(Intent.EXTRA_TEXT, shareBody);
+                } else if(packageName.contains("mms")) {
+                    intent.putExtra(Intent.EXTRA_TEXT, shareBody);
+                } else if(packageName.contains("android.gm")) {
+                    intent.putExtra(Intent.EXTRA_TEXT, shareBody);
+                    intent.putExtra(Intent.EXTRA_SUBJECT, shareSubject);               
+                    intent.setType("message/rfc822");
+                }
+                intentList.add(new LabeledIntent(intent, packageName, ri.loadLabel(pm), ri.icon));
+            }
+        }
+        // convert intentList to array
+        LabeledIntent[] extraIntents = intentList.toArray( new LabeledIntent[ intentList.size() ]);
+
+        openInChooser.putExtra(Intent.EXTRA_INITIAL_INTENTS, extraIntents);
+        startActivity(openInChooser);
     }
 }

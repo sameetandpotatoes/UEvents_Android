@@ -15,11 +15,9 @@ import android.widget.TextView;
 
 public class SchoolAdapter extends BaseAdapter{
 	private final ArrayList mData;
-//	private final Context context;
     public SchoolAdapter(Context context, Map<String, String> map) {
         mData = new ArrayList();
         mData.addAll(map.entrySet());
-//        this.context = context;
     }
 
     @Override
@@ -43,7 +41,7 @@ public class SchoolAdapter extends BaseAdapter{
     	if (convertView == null){
             convertView = LayoutInflater.from(context).inflate(R.layout.school_list_item, parent, false);
     	}
-    	Typeface regular = LoginUsingActivityActivity.regular;
+    	Typeface regular = LoggedIn.regular;
     	
         Map.Entry<String, String> item = getItem(position);
         final TextView school = ((TextView) convertView.findViewById(R.id.school));

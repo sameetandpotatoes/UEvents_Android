@@ -3,6 +3,7 @@ package com.sapra.uevents;
 import java.util.Arrays;
 import java.util.List;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -13,7 +14,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.facebook.LoggingBehavior;
 import com.facebook.Session;
@@ -49,7 +49,8 @@ public final class TestFragment extends Fragment {
             }
             if (session == null) {
                 session = new Session(getActivity());
-                session = new Session.Builder(getActivity().getApplicationContext()).setApplicationId(getActivity().getApplicationContext().getString(R.string.app_id)).build();
+                Context c = getActivity().getApplicationContext();
+                session = new Session.Builder(c).setApplicationId(c.getString(ENVRouter.getFacebookAppId())).build();
             }
             Session.setActiveSession(session);
             if (session.getState().equals(SessionState.CREATED_TOKEN_LOADED)) {
@@ -127,7 +128,8 @@ public final class TestFragment extends Fragment {
 			if (mSession == null || isSessionChanged(session)){
 				mSession = session;
 				Log.i("API", "Getting user info");
-				if (((LoginPage) getActivity()).getUserInfo()){
+				((LoginPage) getActivity()).getUserInfo();
+//				if (((LoginPage) getActivity()).getUserInfo()){
 					if (((LoginPage) getActivity()).postToAPI()){
 						Log.i("API", "Logging in");
 						((LoginPage) getActivity()).loggedIn();
@@ -135,9 +137,10 @@ public final class TestFragment extends Fragment {
 						Log.i("API", "Going to university");
 						((LoginPage) getActivity()).university();
 					}
-				} else{
-					Log.i("API", "Already had user info");
-				}
+//				} else{
+//					Log.i("API", "Already had user info");
+//					((LoginPage) getActivity()).loggedIn();
+//				}
 			}
 		} else if (state.isClosed()) {
 			lb.setOnClickListener(new OnClickListener(){

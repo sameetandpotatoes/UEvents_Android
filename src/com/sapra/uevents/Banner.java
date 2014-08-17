@@ -27,14 +27,15 @@ public class Banner extends ImageView {
      *
      */
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        int width = MeasureSpec.getSize(widthMeasureSpec);
+    	int width = MeasureSpec.getSize(widthMeasureSpec);
         int height = 400;
         if (getDrawable() != null && getDrawable().getIntrinsicWidth() != 0){
+        	//Height with scale aspect ratio
         	height = width * getDrawable().getIntrinsicHeight() / getDrawable().getIntrinsicWidth();
-        	if (height < 400)
-        		height = 400;
-        	else if (height > 550)
-        		height = 550;
+        	if (height < 350)
+        		height = 350;
+        	else if (height > 500)
+        		height = 500;
         }
         setMeasuredDimension(width, height);
         setColorFilter(Color.rgb(123, 123, 123), android.graphics.PorterDuff.Mode.MULTIPLY);

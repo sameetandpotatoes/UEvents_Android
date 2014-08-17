@@ -15,9 +15,10 @@ import android.os.Parcelable;
 public class Event implements Parcelable {
 	private String id;
 	private String name;
+	private String rawName;
 	private String description;
 	private String attending;
-	private String start_date, start_time;
+	private String start_date, start_time, shortStartDate;
 	private String end_date, end_time;
 	private String url;
 	private String cover_url;
@@ -25,13 +26,14 @@ public class Event implements Parcelable {
 	private String owner;
 	private String fbStatus;
 	private String time;
-	private String rawTime;
-	public static final int CHAR_LENGTH = 50;
+	private String rawStartTime, rawEndTime;
+	public static final int CHAR_LENGTH = 35;
 	private ArrayList<String> tags = new ArrayList<String>();
 	public Event(JSONObject object){
 		try{
 			this.owner = object.getString("organizer");
 			this.name = object.getString("title");
+			this.rawName = name;
 			int indexToCutOff = Math.min(name.length(), CHAR_LENGTH);
 			this.name = name.substring(0, indexToCutOff);
 			if (indexToCutOff == CHAR_LENGTH)
@@ -39,13 +41,21 @@ public class Event implements Parcelable {
 			this.location = (object.getString("location") == "null")? "No Location" 
 																	: (object.getString("location"));
 			this.description = object.getString("description");
-			this.start_date = DateFormatter.formatDate(object.getString("start_date"));
-			this.start_time = DateFormatter.formatTime(object.getString("start_time"));
-			this.end_date = DateFormatter.formatDate(object.getString("end_date"));
-			this.end_time = DateFormatter.formatTime(object.getString("end_time"));
+			
+//			this.start_date 	= DateFormatter.formatDate(object.getString("start_time"));
+//			this.shortStartDate = DateFormatter.shortDate(object.getString("start_time"));
+			this.start_date = DateFormatter.formatADate(object.getString("start_date"), "yyyy-MM-dd", "EEEE, MMMM dd");
+			this.shortStartDate = DateFormatter.formatADate(object.getString("start_date"), "yyyy-MM-dd", "MM/dd/yy");
+			this.start_time 	= DateFormatter.formatTime(object.getString("start_time"));
+			this.end_date 		= DateFormatter.formatDate(object.getString("end_time"));
+			this.end_time		= DateFormatter.formatTime(object.getString("end_time"));
+			this.rawStartTime 	= object.getString("start_time");
+			this.rawEndTime 	= object.getString("end_time");
+			if (rawEndTime.equals("null"))
+				rawEndTime = rawStartTime;
 			this.attending = object.getString("attending");
 			this.id = object.getString("event_id");
-//			this.venue = object.getString("venue")
+//			this.venue = object.getString("venue");
 			JSONArray tags = object.getJSONArray("tags");
 			for (int i = 0; i < tags.length(); i++){
 				JSONObject tag = tags.getJSONObject(i);
@@ -59,11 +69,20 @@ public class Event implements Parcelable {
 			
 		}
 	}
+	public String getRawName(){
+		return rawName;
+	}
 	public String getStart_time(){
 		return start_time;
 	}
-	public String getRawTime(){
-		return rawTime;
+	public String getEnd_time(){
+		return end_time;
+	}
+	public String getRawStartTime(){
+		return rawStartTime;
+	}
+	public String getRawEndTime(){
+		return rawEndTime;
 	}
 	public String getID(){
 		return id;
@@ -101,6 +120,9 @@ public class Event implements Parcelable {
 	public String getStatus(){
 		return fbStatus;
 	}
+	public String getShortStartDate(){
+		return shortStartDate;
+	}
 	public void setStatus(String status){
 		this.fbStatus = status;
 	}
@@ -130,6 +152,11 @@ public class Event implements Parcelable {
 		out.writeString(time);
 		out.writeString(url);
 		out.writeString(start_time);
+		out.writeString(end_time);
+		out.writeString(shortStartDate);
+		out.writeString(rawStartTime);
+		out.writeString(rawEndTime);
+		out.writeString(rawName);
 	}
 	public static final Parcelable.Creator<Event> CREATOR = new Parcelable.Creator<Event>() {
         public Event createFromParcel(Parcel in) {
@@ -154,5 +181,10 @@ public class Event implements Parcelable {
     	this.time = in.readString();
     	this.url = in.readString();
     	this.start_time = in.readString();
+    	this.end_time = in.readString();
+    	this.shortStartDate = in.readString();
+    	this.rawStartTime = in.readString();
+    	this.rawEndTime = in.readString();
+    	this.rawName = in.readString();
     }
 }

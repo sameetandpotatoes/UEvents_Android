@@ -49,7 +49,7 @@ public class Tag extends Fragment{
 	            		position = Constants.NIGHTLIFE;
 	            	else
 	            		position = 0;
-	            	((LoginUsingActivityActivity) getActivity()).getPCListener().onPageSelected(position);
+	            	((LoggedIn) getActivity()).getPCListener().onPageSelected(position);
 	            }
 	        });
 		}

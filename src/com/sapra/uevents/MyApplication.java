@@ -2,6 +2,9 @@ package com.sapra.uevents;
 
 import java.util.HashMap;
 
+import com.google.analytics.tracking.android.GoogleAnalytics;
+import com.google.analytics.tracking.android.Tracker;
+
 import android.app.Application;
 
 public class MyApplication extends Application{
@@ -17,13 +20,7 @@ public class MyApplication extends Application{
 	    GLOBAL_TRACKER, // Tracker used by all the apps from a company. eg: roll-up tracking.
 	    ECOMMERCE_TRACKER, // Tracker used by all ecommerce transactions from a company.
 	  }
-	  public static final String eventsURL = "http://uevents.192.168.1.75.xip.io/api/events.json";
-	  public static final String schoolGETURL = "http://uevents.192.168.1.75.xip.io/api/schools.json";
-	  public static final String schoolPOSTURL = "";
 	  
-	  public String getEventsURL(){
-		  return eventsURL;
-	  }
 //	  HashMap<TrackerName, Tracker> mTrackers = new HashMap<TrackerName, Tracker>();
 //	  
 //	  synchronized Tracker getTracker(TrackerName trackerId) {

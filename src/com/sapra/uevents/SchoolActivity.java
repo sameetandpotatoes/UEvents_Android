@@ -145,7 +145,7 @@ public class SchoolActivity extends Activity{
     	EasyTracker.getInstance(this).activityStop(this);
     }
 	public void loggedIn(){
-    	Intent events = new Intent(getApplicationContext(), LoginUsingActivityActivity.class);
+    	Intent events = new Intent(getApplicationContext(), LoggedIn.class);
     	onTrimMemory(TRIM_MEMORY_UI_HIDDEN);
     	events.putExtra("Session", Session.getActiveSession());
     	startActivity(events);
@@ -170,7 +170,6 @@ public class SchoolActivity extends Activity{
 		public void onPostExecute(Boolean success){
 			if (success){
 				//Add option for school not listed
-				allUniv.put("School Not Listed", "0");
 				schoolAdapter = new SchoolAdapter(context, allUniv);
 		        listView.setAdapter(schoolAdapter);
 		        schoolAdapter.notifyDataSetChanged();

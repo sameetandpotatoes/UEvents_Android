@@ -52,7 +52,7 @@ public class CustomAdapter extends BaseAdapter {
     	Context context = parent.getContext();
 	    inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		view = inflater.inflate(R.layout.list_item, parent, false);
-        Typeface bold = LoginUsingActivityActivity.bold;
+        Typeface bold = LoggedIn.bold;
     	TextView name = (TextView) view.findViewById(R.id.name);
     	TextView when = (TextView) view.findViewById(R.id.when);
     	TextView where = (TextView) view.findViewById(R.id.where);

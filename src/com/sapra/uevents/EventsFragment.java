@@ -109,17 +109,23 @@ public class EventsFragment extends Fragment {
 	public void onDestroy(){
 		super.onDestroy();
 	}
+	@Override
+	public void onHiddenChanged(boolean hidden){
+		if (!hidden && tag.equals("My Events")){
+			getEvents();
+		}
+	}
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
 	    if (isAdded()){
-	    	((LoginUsingActivityActivity) getActivity()).setActionBarTitle("All Events", true);
+	    	((LoggedIn) getActivity()).setActionBarTitle("All Events", true);
 	        View rootView = inflater.inflate(R.layout.activity, container, false);
-	        Typeface bold  = LoginUsingActivityActivity.bold;
+	        Typeface bold  = LoggedIn.bold;
 	        date = (TextView) rootView.findViewById(R.id.static_date);
 	        date.setTypeface(bold);
 	        lv = (ListView) rootView.findViewById(android.R.id.list);
 	        swipeView = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe);
-	        swipeView.setColorSchemeResources(
+	        swipeView.setColorScheme(
 	        		R.color.uchicago_secondary,
 	        		R.color.uchicago, 
 	                R.color.uchicago_dark, 
@@ -137,7 +143,7 @@ public class EventsFragment extends Fragment {
 	    	return null;
 	    }
 	}
-	private void getEvents(){
+	public void getEvents(){
 		swipeView.setRefreshing(true);
         getActivity().runOnUiThread(new Runnable(){
         	public void run(){
@@ -185,7 +191,8 @@ public class EventsFragment extends Fragment {
 							if (events.length() > 0){
 								TextView newDate = new TextView(context);
 								String rawDate = (String) event_group.get("date");
-								newDate.setText(DateFormatter.formatDate(rawDate));
+								String formattedDate = DateFormatter.formatADate(rawDate, "yyyy-MM-dd", "EEEE, MMMM dd"); 
+								newDate.setText(formattedDate);
 								allNewDates.add(newDate);
 								listView.add(newDate);
 								for (int j = 0; j < events.length(); j++){

@@ -23,29 +23,30 @@
 					android:layout_width="fill_parent" 
 					android:layout_height="wrap_content"
 					android:scaleType="fitXY"
+					android:src="@drawable/placeholder"
 					android:adjustViewBounds="true" />
 				<TextView 
-				    android:id="@+id/start" 
+				    android:id="@+id/location" 
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_alignBottom="@id/cover_url"
 					android:layout_marginLeft="5dp"
-					android:drawableLeft="@drawable/clock25"
-					android:drawablePadding="5dip"
 					android:paddingLeft="10dp"
 					android:paddingRight="6dp"
-					android:layout_marginBottom="10dp"
-					android:textSize="18sp"
+					android:layout_marginBottom="30dp"
+					android:textSize="16sp"
 					android:textColor="#FFFFFF" />
 				<TextView 
-				    android:id="@+id/location" 
+				    android:id="@+id/start" 
 				    android:layout_width="wrap_content"
 				    android:layout_height="wrap_content" 
-				    android:layout_toRightOf="@id/start"
+				    android:layout_above="@+id/location"
 				    android:layout_alignBottom="@id/cover_url"
 				    android:layout_marginLeft="5dp"
-				    android:layout_marginBottom="10dp"
-				    android:textSize="18sp"
+				    android:paddingLeft="10dp"
+					android:paddingRight="6dp"
+				    android:layout_marginBottom="5dp"
+				    android:textSize="16sp"
 				    android:textColor="#FFFFFF"/>
 				<TextView 
 				    android:id="@+id/lbl_name"
@@ -53,8 +54,8 @@
 					android:layout_height="wrap_content"
 					android:layout_above="@id/start"
 					android:layout_marginLeft="15dp"
-					android:layout_marginBottom="25dp"
-					android:textSize="24sp" 
+					android:layout_marginBottom="35dp"
+					android:textSize="20sp" 
 					android:textColor="#FFFFFF" />
 			</RelativeLayout>
 			<com.sapra.uevents.SegmentedRadioGroup
@@ -130,7 +131,6 @@
 					    android:id="@+id/tags"
 					    android:layout_width="wrap_content"
 					    android:layout_height="50dp"
-					    android:background="@drawable/border"
 					    android:orientation="horizontal">
 					</LinearLayout>
 				</HorizontalScrollView>

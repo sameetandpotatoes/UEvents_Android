@@ -76,6 +76,12 @@ public class JSONParser {
         // return JSON String
         return jObj;
     }
+    /**
+     * Get Events
+     * @param url URL to retrieve events
+     * @param filter Filter in URL
+     * @return Raw Data in JSONArray
+     */
     public JSONArray getNewJSONFromUrl(String url, String filter){
     	Log.i("API", url);
     	StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();

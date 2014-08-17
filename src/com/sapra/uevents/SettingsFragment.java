@@ -17,7 +17,6 @@ import com.facebook.widget.LoginButton;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class SettingsFragment extends Fragment{
-//	private String userId, schoolName, userName;
 	private ImageLoader imageLoader;
 	public SettingsFragment(){
 		imageLoader = ImageLoader.getInstance();
@@ -31,20 +30,20 @@ public class SettingsFragment extends Fragment{
             Bundle savedInstanceState) {
 		if (isAdded()){
 			View rootView = inflater.inflate(R.layout.settings, container, false);
-			Typeface regular = LoginUsingActivityActivity.regular;
+			Typeface regular = LoggedIn.regular;
 			TextView school = (TextView) rootView.findViewById(R.id.school_selected);
 			school.setTextColor(Color.BLACK);
 			school.setText(User.name + "\n" + User.schoolName);
 			school.setTypeface(regular);
 			
 			MLRoundedImageView profilePictureView = (MLRoundedImageView) rootView.findViewById(R.id.fbProfilePictureView);
-			imageLoader.displayImage("https://graph.facebook.com/"+User.id+"/picture?width=200&height=200", profilePictureView);
+			imageLoader.displayImage(User.pictureURL, profilePictureView);
 			LoginButton loginView = (LoginButton) rootView.findViewById(R.id.connectWithFbButton);
 			loginView.setBackgroundColor(getResources().getColor(R.color.uchicago));
 			loginView.setOnClickListener(new OnClickListener(){
 				public void onClick(View arg0) {
-					System.gc();
-					((LoginUsingActivityActivity) getActivity()).onClickLogout();
+//					User.clear();
+					((LoggedIn) getActivity()).onClickLogout();
 				}
 			});
 			regular = null;

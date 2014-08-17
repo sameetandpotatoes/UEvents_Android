@@ -4,7 +4,6 @@ import android.os.Build;
 
 public class ENVRouter {
 	public static final String prodENV = "http://uevents.io/";
-//	public static final String localENV = "http://10.0.3.2/";
 	public static final String localENV = "http://uevents.192.168.1.75.xip.io:20559/";
 	
 	public static final String myEventsURL = "api/events/user.json";
@@ -13,7 +12,10 @@ public class ENVRouter {
 	public static final String createUserURL = "api/users/";
 	public static final String updateUserURL = "api/users/";
 	public static final String postRSVPURL = "api/events/";
-	
+	/**
+     * Determines if local or production environment
+     * @return Returns correct environment URL
+     */
 	public static String getENV(){
 //		if (Build.FINGERPRINT.contains("generic")){
 //			return localENV;
@@ -39,5 +41,12 @@ public class ENVRouter {
 	}
 	public static String updateUserURL(){
 		return getENV() + updateUserURL + User.id + "?authentication_token="+User.authToken;
+	}
+	public static int getFacebookAppId(){
+		if (getENV().equals(localENV)){
+			return R.string.dev_appId;
+		} else{
+			return R.string.prod_appId;
+		}
 	}
 }

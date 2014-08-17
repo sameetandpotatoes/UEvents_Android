@@ -27,8 +27,6 @@ import com.facebook.model.GraphUser;
 import com.google.analytics.tracking.android.EasyTracker;
 
 public class LoginPage extends FragmentActivity {
-//   public static String userId = "", universityName= "", userName= "", userEmail= "", firstName= "", lastName= "", accessToken= "", pictureURL= "";
-//   public static String auth_token, schoolId;
    public Context context;
    private TestFragmentAdapter mAdapter;
    private ViewPager mPager;
@@ -42,7 +40,7 @@ public class LoginPage extends FragmentActivity {
         context = this;
     }
     public void loggedIn(){
-    	Intent events = new Intent(getApplicationContext(), LoginUsingActivityActivity.class);
+    	Intent events = new Intent(getApplicationContext(), LoggedIn.class);
     	onTrimMemory(TRIM_MEMORY_UI_HIDDEN);
     	events.putExtra("Session", Session.getActiveSession());
     	startActivity(events);
@@ -94,11 +92,11 @@ public class LoginPage extends FragmentActivity {
             // 10. convert inputstream to string
             if(inputStream != null){
                 result = convertInputStreamToString(inputStream);
+                Log.i("API", result);
                 JSONObject obj = new JSONObject(result);
                 User.authToken = ((JSONObject) obj.get("user")).getString("authentication_token");
-                school_id =((JSONObject) obj.get("user")).getString("school_id");
-                school_name =((JSONObject) obj.get("user")).getString("school_name");
-                Log.i("API", result);
+                school_id = ((JSONObject) obj.get("user")).getString("school_id");
+                school_name = ((JSONObject) obj.get("user")).getString("school_name");
                 if (school_id.equals("null"))
                 	return false;
                 else{
@@ -147,6 +145,10 @@ public class LoginPage extends FragmentActivity {
     	startActivity(university);
     	finish();
 	}
+	/**
+    * Makes request to Facebook and gets user info
+    *
+    */
 	public boolean getUserInfo(){
 		Session activeSession = Session.getActiveSession();
 		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -163,7 +165,7 @@ public class LoginPage extends FragmentActivity {
            User.accessToken = Session.getActiveSession().getAccessToken();
            User.firstName = graphUser.getFirstName();
            User.lastName = graphUser.getLastName();
-           User.pictureURL = "http://graph.facebook.com/"+User.id+"/picture?type=square";
+           User.pictureURL = "http://graph.facebook.com/"+User.id+"/picture?width=200&height=200";
         }
         return true;
 	}

@@ -23,5 +23,6 @@
     <string name="empty_string"></string>
     <string name="RSVP">RSVP</string>
     <string name="logout">Log out</string>
-    <string name="app_id">467774006627402</string>
+    <string name="dev_appId">467774006627402</string>
+    <string name="prod_appId">511481675563436</string>
 </resources>
