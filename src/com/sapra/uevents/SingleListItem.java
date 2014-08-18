@@ -168,8 +168,8 @@ public class SingleListItem extends Activity{
 //        	venue.setText(text)
 //        }
         txtAttending.setText(boldTextWithColorSize(attending, "\nattending", 70));
-    	if (tags.size() == 1){
-    		tags.add(0, "THISISAFILLER");
+    	if (tags.size() == 0){
+    		tags.add(0, "All Events");
     	}
         for (String tag : tags)
         {
@@ -178,15 +178,16 @@ public class SingleListItem extends Activity{
         	tvTag.setTextColor(Color.BLACK);
         	tvTag.setTextSize(17);
         	tvTag.setGravity(Gravity.CENTER);
-        	if (tag.equals("THISISAFILLER")){
-        		tvTag.setText("");
-        	} else{
+//        	if (tag.equals("THISISAFILLER")){
+//        		tvTag.setText("");
+//        	} else{
         		tvTag.setText(tag);
         		tvTag.setTypeface(regular);
-        		tvTag.setCompoundDrawablesWithIntrinsicBounds(R.drawable.tag25, 0, 0, 0);
+        		tvTag.setCompoundDrawablesWithIntrinsicBounds(R.drawable.tags, 0, 0, 0);
         		tvTag.setCompoundDrawablePadding(15);
+//        		tvTag.setBackground(getResources().getDrawable(R.drawable.topborder));
         		tvTag.setPadding(15, 5, 5, 5);
-        	}
+//        	}
         	llTags.addView(tvTag, 0);
         }
         ImageLoader imageLoader = ImageLoader.getInstance();

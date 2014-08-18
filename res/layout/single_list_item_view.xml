@@ -119,13 +119,14 @@
 				    android:paddingRight="10dip"
 				    android:textSize="18sp"
 				    android:gravity="center_horizontal"
-				    android:background="@drawable/border"
+				    android:background="@drawable/toprightborder"
 				    android:textColor="#000000"/>
 				<HorizontalScrollView
 				    android:id="@+id/tagsScroller"
 				    android:layout_width="wrap_content"
 					android:layout_height="match_parent"
 					android:layout_toRightOf="@id/attending"
+					android:background="@drawable/topborder"
 				    android:scrollbars="horizontal">
 					<LinearLayout
 					    android:id="@+id/tags"
