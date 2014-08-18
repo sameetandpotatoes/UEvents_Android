@@ -25,4 +25,5 @@
     <string name="logout">Log out</string>
     <string name="dev_appId">467774006627402</string>
     <string name="prod_appId">511481675563436</string>
+    <string name="emptySpace">                                               </string>
 </resources>

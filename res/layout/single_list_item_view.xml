@@ -77,7 +77,7 @@
 					android:textAppearance="?android:attr/textAppearanceSmall"
 					android:button="@null"
 					android:gravity="center"
-					android:background="@color/white"
+					android:background="@drawable/rightborder"
 					android:textColor="@color/uchicago" />
 				<RadioButton android:id="@+id/interested"
 					android:layout_width="0dp"
@@ -90,7 +90,7 @@
 					android:textAppearance="?android:attr/textAppearanceSmall"
 					android:button="@null"
 					android:gravity="center"
-					android:background="@color/white"
+					android:background="@drawable/rightborder"
 					android:textColor="@color/uchicago" />
 				<RadioButton android:id="@+id/notgoing"
 					android:layout_width="0dp"
@@ -102,7 +102,7 @@
 					android:paddingRight="10dp"
 					android:button="@null"
 					android:gravity="center"
-					android:background="@color/white"
+					android:background="@drawable/leftborder"
 					android:textAppearance="?android:attr/textAppearanceSmall"
 					android:textColor="@color/uchicago" />
 			</com.sapra.uevents.SegmentedRadioGroup>
@@ -117,21 +117,22 @@
 				    android:layout_alignParentLeft="true"
 				    android:paddingLeft="10dip"
 				    android:paddingRight="10dip"
-				    android:textSize="18sp"
-				    android:gravity="center_horizontal"
-				    android:background="@drawable/toprightborder"
+				    android:textSize="14sp"
+				    android:gravity="center"
+				    android:background="@drawable/toprightdownborder"
 				    android:textColor="#000000"/>
 				<HorizontalScrollView
 				    android:id="@+id/tagsScroller"
-				    android:layout_width="wrap_content"
+				    android:layout_width="fill_parent"
 					android:layout_height="match_parent"
 					android:layout_toRightOf="@id/attending"
-					android:background="@drawable/topborder"
+					android:background="@drawable/topdownborder"
 				    android:scrollbars="horizontal">
 					<LinearLayout
 					    android:id="@+id/tags"
 					    android:layout_width="wrap_content"
 					    android:layout_height="50dp"
+					    android:layout_gravity="center_vertical"
 					    android:orientation="horizontal">
 					</LinearLayout>
 				</HorizontalScrollView>

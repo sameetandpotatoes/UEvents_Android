@@ -231,7 +231,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int com_facebook_list_section_header_background=0x7f020014;
         public static final int com_facebook_loginbutton_silver=0x7f020015;
         public static final int com_facebook_logo=0x7f020016;
-        public static final int com_facebook_picker_default_separator_color=0x7f02004c;
+        public static final int com_facebook_picker_default_separator_color=0x7f020050;
         public static final int com_facebook_picker_item_background=0x7f020017;
         public static final int com_facebook_picker_list_focused=0x7f020018;
         public static final int com_facebook_picker_list_longpressed=0x7f020019;
@@ -262,29 +262,33 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int home1=0x7f020032;
         public static final int home2=0x7f020033;
         public static final int icon=0x7f020034;
-        public static final int list_item_selector=0x7f020035;
-        public static final int list_selector=0x7f020036;
-        public static final int listitem_background=0x7f020037;
-        public static final int loc25=0x7f020038;
-        public static final int menu_selector=0x7f020039;
-        public static final int music=0x7f02003a;
-        public static final int myevents=0x7f02003b;
-        public static final int nightlife=0x7f02003c;
-        public static final int nothing=0x7f02003d;
-        public static final int offcampus=0x7f02003e;
-        public static final int placeholder=0x7f02003f;
-        public static final int settings=0x7f020040;
-        public static final int shadow=0x7f020041;
-        public static final int share=0x7f020042;
-        public static final int sports=0x7f020043;
-        public static final int tab_bar_background=0x7f020044;
-        public static final int tab_bar_background_selected=0x7f020045;
-        public static final int tab_bar_background_selected_pressed=0x7f020046;
-        public static final int tag25=0x7f020047;
-        public static final int tags=0x7f020048;
-        public static final int topborder=0x7f020049;
-        public static final int toprightborder=0x7f02004a;
-        public static final int uevents=0x7f02004b;
+        public static final int leftborder=0x7f020035;
+        public static final int leftborderactive=0x7f020036;
+        public static final int list_item_selector=0x7f020037;
+        public static final int list_selector=0x7f020038;
+        public static final int listitem_background=0x7f020039;
+        public static final int loc25=0x7f02003a;
+        public static final int menu_selector=0x7f02003b;
+        public static final int music=0x7f02003c;
+        public static final int myevents=0x7f02003d;
+        public static final int nightlife=0x7f02003e;
+        public static final int nothing=0x7f02003f;
+        public static final int offcampus=0x7f020040;
+        public static final int placeholder=0x7f020041;
+        public static final int rightborder=0x7f020042;
+        public static final int rightborderactive=0x7f020043;
+        public static final int settings=0x7f020044;
+        public static final int shadow=0x7f020045;
+        public static final int share=0x7f020046;
+        public static final int sports=0x7f020047;
+        public static final int tab_bar_background=0x7f020048;
+        public static final int tab_bar_background_selected=0x7f020049;
+        public static final int tab_bar_background_selected_pressed=0x7f02004a;
+        public static final int tag25=0x7f02004b;
+        public static final int tags=0x7f02004c;
+        public static final int topdownborder=0x7f02004d;
+        public static final int toprightdownborder=0x7f02004e;
+        public static final int uevents=0x7f02004f;
     }
     public static final class id {
         public static final int all=0x7f040040;
@@ -425,6 +429,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int com_facebook_usersettingsfragment_logged_in=0x7f070009;
         public static final int com_facebook_usersettingsfragment_not_logged_in=0x7f07000a;
         public static final int dev_appId=0x7f070021;
+        public static final int emptySpace=0x7f070023;
         public static final int empty_string=0x7f07001e;
         /** Replace placeholder ID with your tracking ID
          */

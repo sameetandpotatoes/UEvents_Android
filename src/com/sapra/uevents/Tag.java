@@ -21,6 +21,11 @@ public class Tag extends Fragment{
 			return null;
 		}
 	}
+	@Override
+	public void onCreate(Bundle savedState) {
+	    super.onCreate(savedState);
+	    setRetainInstance(true); // handle rotations gracefully
+	}
 	public void onDestroy(){
 		super.onDestroy();
 	}

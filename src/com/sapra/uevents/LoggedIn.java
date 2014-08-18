@@ -53,12 +53,7 @@ public class LoggedIn extends FragmentActivity implements ActionBar.TabListener{
         Constants.config = new ImageLoaderConfiguration.Builder(getApplicationContext())
             .build();
         
-        Display display = getWindowManager().getDefaultDisplay();
-        Point size = new Point();
-        display.getSize(size);
-
-        Constants.width = size.x;
-        Constants.height = size.y;
+        setBounds();
         
         mDemoCollectionPagerAdapter = new DemoCollectionPagerAdapter(getSupportFragmentManager());
         session = (Session) getIntent().getExtras().get("Session");
@@ -116,7 +111,14 @@ public class LoggedIn extends FragmentActivity implements ActionBar.TabListener{
         	firstTime = !firstTime;
         }
     }
-    /**
+    public void setBounds() {
+    	Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        Constants.width = size.x;
+        Constants.height = size.y;
+	}
+	/**
      * Checks connectivity and displays dialog
      *
      */
@@ -204,6 +206,7 @@ public class LoggedIn extends FragmentActivity implements ActionBar.TabListener{
 	}
     public void onResume() {
         super.onResume();
+        setBounds();
     }     
     public static class DemoCollectionPagerAdapter extends FragmentPagerAdapter {
 

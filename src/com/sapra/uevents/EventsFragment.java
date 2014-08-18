@@ -57,9 +57,15 @@ public class EventsFragment extends Fragment {
 		String noSpaces = noAnd.replaceAll(" ", "%20");
 		ef.url = noSpaces;
 		ef.session = session;
-		ef.context = context;
+//		ef.context = context;
+//		ef.context = getActivity().getApplicationContext();
 		ef.tag = tag;
         return ef;
+	}
+	@Override
+	public void onCreate(Bundle savedState) {
+	    super.onCreate(savedState);
+	    setRetainInstance(true); // handle rotations gracefully
 	}
 	private void setListeners(){
         lv.setOnItemClickListener(new OnItemClickListener(){
@@ -119,6 +125,7 @@ public class EventsFragment extends Fragment {
             Bundle savedInstanceState) {
 	    if (isAdded()){
 	    	((LoggedIn) getActivity()).setActionBarTitle("All Events", true);
+	    	this.context = getActivity().getApplicationContext();
 	        View rootView = inflater.inflate(R.layout.activity, container, false);
 	        Typeface bold  = LoggedIn.bold;
 	        date = (TextView) rootView.findViewById(R.id.static_date);
@@ -155,6 +162,8 @@ public class EventsFragment extends Fragment {
 	    	        			adapter.notifyDataSetInvalidated();
 	    	        			lv.invalidateViews();
     	        			}
+    	        		} else{
+    	        			System.out.println("Context is null");
     	        		}
         				swipeView.setRefreshing(false);
         			}

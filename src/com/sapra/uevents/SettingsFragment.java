@@ -26,6 +26,11 @@ public class SettingsFragment extends Fragment{
 		SettingsFragment sf = new SettingsFragment();
 		return sf;
 	}
+	@Override
+	public void onCreate(Bundle savedState) {
+	    super.onCreate(savedState);
+	    setRetainInstance(true); // handle rotations gracefully
+	}
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
 		if (isAdded()){

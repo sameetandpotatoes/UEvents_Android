@@ -59,6 +59,7 @@ public class SingleListItem extends Activity{
 	private String userId;
 	private Typeface regular, bold;
 	private boolean alreadyCreatedEvent;
+	private TextView txtAttending;
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getActionBar().setDisplayHomeAsUpEnabled(true);
@@ -73,7 +74,7 @@ public class SingleListItem extends Activity{
         TextView txtName = (TextView) findViewById(R.id.lbl_name);
         TextView txtStart = (TextView) findViewById(R.id.start);
         TextView txtLoc = (TextView) findViewById(R.id.location);
-        TextView txtAttending = (TextView) findViewById(R.id.attending);
+        txtAttending = (TextView) findViewById(R.id.attending);
         TextView venue = (TextView) findViewById(R.id.venue);
         ((RadioButton) findViewById(R.id.going)).setTypeface(regular);
         ((RadioButton) findViewById(R.id.interested)).setTypeface(regular);
@@ -133,12 +134,18 @@ public class SingleListItem extends Activity{
 	        			} else{
 	        				Toast.makeText(getApplicationContext(), "Interested in " + selectedEvent.getName(), Toast.LENGTH_SHORT).show();
 	        			}
-		        		((RadioButton) findViewById(R.id.notgoing)).setBackgroundColor(getResources().getColor(R.color.white));
+		        		((RadioButton) findViewById(R.id.notgoing)).setBackground(getResources().getDrawable(R.drawable.rightborder));
 		        		((RadioButton) findViewById(R.id.notgoing)).setTextColor(getResources().getColor(R.color.uchicago));
-						((RadioButton) findViewById(R.id.interested)).setBackgroundColor(getResources().getColor(R.color.white));
+						((RadioButton) findViewById(R.id.interested)).setBackground(getResources().getDrawable(R.drawable.rightborder));
 						((RadioButton) findViewById(R.id.interested)).setTextColor(getResources().getColor(R.color.uchicago));
-						((RadioButton) findViewById(R.id.going)).setBackgroundColor(getResources().getColor(R.color.white));
+						((RadioButton) findViewById(R.id.going)).setBackground(getResources().getDrawable(R.drawable.rightborder));
 						((RadioButton) findViewById(R.id.going)).setTextColor(getResources().getColor(R.color.uchicago));
+						if (checkedId == R.id.notgoing){
+							((RadioButton) findViewById(checkedId)).setBackground(getResources().getDrawable(R.drawable.leftborderactive));
+//							((RadioButton) findViewById(checkedId)).setBackgroundColor(getResources().getColor(R.color.uchicago));
+						} else{
+							((RadioButton) findViewById(checkedId)).setBackground(getResources().getDrawable(R.drawable.rightborderactive));
+						}
 						((RadioButton) findViewById(checkedId)).setBackgroundColor(getResources().getColor(R.color.uchicago));
 						((RadioButton) findViewById(checkedId)).setTextColor(getResources().getColor(R.color.white));
 					} else{
@@ -168,6 +175,7 @@ public class SingleListItem extends Activity{
 //        	venue.setText(text)
 //        }
         txtAttending.setText(boldTextWithColorSize(attending, "\nattending", 70));
+        txtAttending.setWidth(Constants.width/3);
     	if (tags.size() == 0){
     		tags.add(0, "All Events");
     	}
@@ -178,16 +186,11 @@ public class SingleListItem extends Activity{
         	tvTag.setTextColor(Color.BLACK);
         	tvTag.setTextSize(17);
         	tvTag.setGravity(Gravity.CENTER);
-//        	if (tag.equals("THISISAFILLER")){
-//        		tvTag.setText("");
-//        	} else{
-        		tvTag.setText(tag);
-        		tvTag.setTypeface(regular);
-        		tvTag.setCompoundDrawablesWithIntrinsicBounds(R.drawable.tags, 0, 0, 0);
-        		tvTag.setCompoundDrawablePadding(15);
-//        		tvTag.setBackground(getResources().getDrawable(R.drawable.topborder));
-        		tvTag.setPadding(15, 5, 5, 5);
-//        	}
+    		tvTag.setText(tag);
+    		tvTag.setTypeface(regular);
+    		tvTag.setPadding(5,5,5,5);
+    		tvTag.setCompoundDrawablesWithIntrinsicBounds(R.drawable.tags, 0, 0, 0);
+    		tvTag.setCompoundDrawablePadding(15);
         	llTags.addView(tvTag, 0);
         }
         ImageLoader imageLoader = ImageLoader.getInstance();
@@ -333,13 +336,6 @@ public class SingleListItem extends Activity{
 	        	finish();
 	            return true;
 	        case R.id.menu_item_share:
-//	        	Intent sharingIntent = new Intent();
-//	        	sharingIntent.setAction(Intent.ACTION_SEND);
-//	        	sharingIntent.setType("message/rfc822");
-//	        	String shareBody = "Hey, I'm interested in " + selectedEvent.getRawName() + " at " + selectedEvent.getLocation() +" ("+selectedEvent.getStart_time()+"). Want to join me?\n\nFind more events with UEvents, available on the App Store and the Play Store.\n\n\n\n\nhttp://www.uevents.io";
-//	        	sharingIntent.putExtra(Intent.EXTRA_SUBJECT, "UEvents Invitation to " + selectedEvent.getRawName());
-//	        	sharingIntent.putExtra(Intent.EXTRA_TEXT, shareBody);
-//	        	startActivity(Intent.createChooser(sharingIntent, "Share via"));
 	        	shareEvent();
 	        	return true;
 	        case R.id.cal26:
@@ -394,6 +390,14 @@ public class SingleListItem extends Activity{
     public void onStop(){
     	super.onStop();
     	EasyTracker.getInstance(this).activityStop(this);
+    }
+    @Override
+    public void onResume(){
+    	super.onResume();
+    	if (this.getParent() != null){
+    		((LoggedIn) this.getParent()).setBounds();
+    		txtAttending.setWidth(Constants.width/3);
+    	}
     }
     private void shareEvent(){
         Resources resources = getResources();
