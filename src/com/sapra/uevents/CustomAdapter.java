@@ -73,10 +73,12 @@ public class CustomAdapter extends BaseAdapter {
 	    	else if (data.get(position) instanceof TextView){
 	    		RelativeLayout rl = (RelativeLayout) view.findViewById(R.id.event);
 	    		rl.setVisibility(View.GONE);
+	    		TextView newDate = (TextView) view.findViewById(R.id.new_date);
 	    		if (position != 0){
-		    		TextView newDate = (TextView) view.findViewById(R.id.new_date);
 		    		newDate.setTypeface(bold);
 		    		newDate.setText(((TextView) (data.get(position))).getText());
+	    		} else{
+	    			newDate.setVisibility(View.GONE);
 	    		}
 	    	}
         }
