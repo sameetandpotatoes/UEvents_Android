@@ -73,14 +73,22 @@ public class CustomAdapter extends BaseAdapter {
 	    	else if (data.get(position) instanceof TextView){
 	    		RelativeLayout rl = (RelativeLayout) view.findViewById(R.id.event);
 	    		rl.setVisibility(View.GONE);
-	    		TextView newDate = (TextView) view.findViewById(R.id.new_date);
-	    		newDate.setTypeface(bold);
-	    		newDate.setText(((TextView) (data.get(position))).getText());
+	    		if (position != 0){
+		    		TextView newDate = (TextView) view.findViewById(R.id.new_date);
+		    		newDate.setTypeface(bold);
+		    		newDate.setText(((TextView) (data.get(position))).getText());
+	    		}
 	    	}
         }
         vh = null;
         context = null;
         bold = null;
+        
+        //One last change to the UI for the last element
+        if (position == data.size() - 1){
+    		RelativeLayout rl = (RelativeLayout) view.findViewById(R.id.event);
+    		rl.setPadding(0, 0, 0, 0);
+        }
     	return view;
     }
 }

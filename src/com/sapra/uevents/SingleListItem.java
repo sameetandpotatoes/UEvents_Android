@@ -31,7 +31,9 @@ import android.provider.CalendarContract.Events;
 import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableString;
+import android.text.style.AbsoluteSizeSpan;
 import android.text.style.ForegroundColorSpan;
+import android.text.style.TextAppearanceSpan;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
@@ -101,7 +103,7 @@ public class SingleListItem extends Activity{
         txtName.setText(name);
         txtName.setTypeface(bold);
         txtName.setTextColor(getResources().getColor(R.color.white));
-        txtDescription.setText(boldText("Details: \n\n",description));
+        txtDescription.setText(boldTextSize("Details: \n\n",description, 65));
         
         segmentText = (SegmentedRadioGroup) findViewById(R.id.segment_text);
         segmentText.setOnCheckedChangeListener(new OnCheckedChangeListener(){
@@ -165,7 +167,7 @@ public class SingleListItem extends Activity{
 //        if (venue != null){
 //        	venue.setText(text)
 //        }
-        txtAttending.setText(boldTextWithColor(attending, "\nattending"));
+        txtAttending.setText(boldTextWithColorSize(attending, "\nattending", 70));
     	if (tags.size() == 1){
     		tags.add(0, "THISISAFILLER");
     	}
@@ -368,11 +370,19 @@ public class SingleListItem extends Activity{
     	return spannable;
 	}
 	private Spannable boldTextWithColor(String boldedText, String sourceString){
-		Spannable spannable = new SpannableString(boldedText+sourceString);
-    	spannable.setSpan(new CustomTypefaceSpan("bold", bold), 0, boldedText.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-    	spannable.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.uchicago)), 0, boldedText.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-    	spannable.setSpan(new CustomTypefaceSpan("regular", regular), boldedText.length(), boldedText.length() + sourceString.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-    	return spannable;
+		Spannable boldSpan = boldText(boldedText, sourceString);
+    	boldSpan.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.uchicago)), 0, boldedText.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+    	return boldSpan;
+	}
+	private Spannable boldTextWithColorSize(String boldedText, String sourceString, int size){
+		Spannable colorSpan = boldTextWithColor(boldedText, sourceString);
+		colorSpan.setSpan(new TextAppearanceSpan(null, 0, size, null, null), 0, boldedText.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+		return colorSpan;
+	}
+	private Spannable boldTextSize(String boldedText, String sourceString, int size){
+		Spannable boldSpan = boldText(boldedText, sourceString);
+		boldSpan.setSpan(new TextAppearanceSpan(null, 0, size, null, null), 0, boldedText.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+		return boldSpan;
 	}
 	@Override
     public void onStart(){
@@ -388,8 +398,8 @@ public class SingleListItem extends Activity{
         Resources resources = getResources();
         String shareBody = "Hey, I'm interested in " + selectedEvent.getRawName() + " at " + 
         					selectedEvent.getLocation() +" ("+selectedEvent.getStart_time()+"). "+
-        					"Want to join me?\n\nFind more events with UEvents, available on the App Store "+
-        					"and the Play Store.\n\n\n\n\nhttp://www.uevents.io";
+        					"Want to join me?\n\nFind more events with UEvents, available on the Play Store."+
+        					"\n\n\n\n\nhttp://www.uevents.io";
         String shareSubject = "UEvents Invitation to " + selectedEvent.getName();
         Intent emailIntent = new Intent();
         emailIntent.setAction(Intent.ACTION_SEND);

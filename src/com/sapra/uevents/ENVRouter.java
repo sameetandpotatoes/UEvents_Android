@@ -6,12 +6,12 @@ public class ENVRouter {
 	public static final String prodENV = "http://uevents.io/";
 	public static final String localENV = "http://uevents.192.168.1.75.xip.io:20559/";
 	
-	public static final String myEventsURL = "api/events/user.json";
-	public static final String eventsURL = "api/events.json";
-	public static final String schoolsURL = "api/schools.json";
-	public static final String createUserURL = "api/users/";
-	public static final String updateUserURL = "api/users/";
-	public static final String postRSVPURL = "api/events/";
+	public static final String myEventsURL = "api/v2/events/user.json";
+	public static final String eventsURL = "api/v2/events.json";
+	public static final String schoolsURL = "api/v2/schools.json";
+	public static final String createUserURL = "api/v2/users/";
+	public static final String updateUserURL = "api/v2/users/";
+	public static final String postRSVPURL = "api/v2/events/";
 	/**
      * Determines if local or production environment
      * @return Returns correct environment URL
