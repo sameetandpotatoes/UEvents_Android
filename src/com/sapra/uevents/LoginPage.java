@@ -57,7 +57,7 @@ public class LoginPage extends FragmentActivity {
 
             // 2. make POST request to the given URL
             HttpPost httpPost = new HttpPost(ENVRouter.createUserURL());
-
+            Log.i("API", ENVRouter.createUserURL());
             String json = "";
 
             // 3. build jsonObject
@@ -95,14 +95,19 @@ public class LoginPage extends FragmentActivity {
                 Log.i("API", result);
                 JSONObject obj = new JSONObject(result);
                 User.authToken = ((JSONObject) obj.get("user")).getString("authentication_token");
-                school_id = ((JSONObject) obj.get("user")).getString("school_id");
-                school_name = ((JSONObject) obj.get("user")).getString("school_name");
-                if (school_id.equals("null"))
+                JSONObject school = (JSONObject) (((JSONObject) obj.get("user")).get("school"));
+                if (school != null){
+	                school_id = school.getString("id");
+	                school_name = school.getString("name");
+	                if (school_id.equals("null"))
+	                	return false;
+	                else{
+	                	User.schoolId = school_id;
+	                	User.schoolName = school_name;
+	                	return true;
+	                }
+                } else{
                 	return false;
-                else{
-                	User.schoolId = school_id;
-                	User.schoolName = school_name;
-                	return true;
                 }
             }else{
                 result = "Did not work!";
@@ -166,6 +171,7 @@ public class LoginPage extends FragmentActivity {
            User.firstName = graphUser.getFirstName();
            User.lastName = graphUser.getLastName();
            User.pictureURL = "http://graph.facebook.com/"+User.id+"/picture?width=200&height=200";
+           Log.i("API", "Hello " + User.firstName);
         }
         return true;
 	}

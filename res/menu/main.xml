@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
          android:id="@+id/cal26"
-         android:icon="@drawable/cal26"
+         android:icon="@drawable/calendar"
          android:showAsAction="ifRoom"
          android:title="Calendar"/>
     <item

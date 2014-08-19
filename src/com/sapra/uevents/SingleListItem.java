@@ -184,13 +184,18 @@ public class SingleListItem extends Activity{
         	TextView tvTag = new TextView(this);
         	tvTag.setLayoutParams(lparams);
         	tvTag.setTextColor(Color.BLACK);
-        	tvTag.setTextSize(17);
+        	tvTag.setTextSize(15);
         	tvTag.setGravity(Gravity.CENTER);
+        	if (tag.equals("Music & Fine Arts")){
+        		tvTag.setTextSize(13);
+        	} else if (tag.equals("Food & Dining")){
+        		tvTag.setTextSize(13);
+        	}
     		tvTag.setText(tag);
     		tvTag.setTypeface(regular);
     		tvTag.setPadding(5,5,5,5);
     		tvTag.setCompoundDrawablesWithIntrinsicBounds(R.drawable.tags, 0, 0, 0);
-    		tvTag.setCompoundDrawablePadding(15);
+    		tvTag.setCompoundDrawablePadding(5);
         	llTags.addView(tvTag, 0);
         }
         ImageLoader imageLoader = ImageLoader.getInstance();

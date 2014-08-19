@@ -149,14 +149,8 @@ theme attribute (in the form
 containing a value of this type.
          */
         public static final int title_text=0x7f010003;
-        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
-or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-         */
-        public static final int vpiCirclePageIndicatorStyle=0x7f010012;
     }
     public static final class bool {
-        public static final int default_circle_indicator_centered=0x7f090002;
-        public static final int default_circle_indicator_snap=0x7f090003;
         /** Enable automatic activity tracking
          */
         public static final int ga_autoActivityTracking=0x7f090000;
@@ -165,7 +159,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int ga_reportUncaughtExceptions=0x7f090001;
     }
     public static final class color {
-        public static final int black=0x7f06000b;
+        public static final int black=0x7f060008;
         public static final int com_facebook_blue=0x7f060002;
         public static final int com_facebook_loginview_text_color=0x7f060006;
         public static final int com_facebook_picker_search_bar_background=0x7f060000;
@@ -173,20 +167,28 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int com_facebook_usersettingsfragment_connected_shadow_color=0x7f060004;
         public static final int com_facebook_usersettingsfragment_connected_text_color=0x7f060003;
         public static final int com_facebook_usersettingsfragment_not_connected_text_color=0x7f060005;
-        public static final int dark_gray=0x7f06000d;
-        public static final int default_circle_indicator_fill_color=0x7f060007;
-        public static final int default_circle_indicator_page_color=0x7f060008;
-        public static final int default_circle_indicator_stroke_color=0x7f060009;
-        public static final int getstarted=0x7f060011;
-        public static final int getstarted_light=0x7f060012;
-        public static final int light_gray=0x7f06000c;
-        public static final int uchicago=0x7f06000e;
-        public static final int uchicago_dark=0x7f060010;
-        public static final int uchicago_secondary=0x7f06000f;
-        public static final int white=0x7f06000a;
+        public static final int dark_gray=0x7f06000a;
+        public static final int getstarted=0x7f06000e;
+        public static final int getstarted_light=0x7f06000f;
+        public static final int light_gray=0x7f060009;
+        public static final int uchicago=0x7f06000b;
+        public static final int uchicago_dark=0x7f06000d;
+        public static final int uchicago_secondary=0x7f06000c;
+        /**      <bool name="default_circle_indicator_centered">true</bool>
+    <color name="default_circle_indicator_fill_color">#d3d3d3</color>
+    <color name="default_circle_indicator_page_color">#00000000</color>
+    <integer name="default_circle_indicator_orientation">0</integer>
+    <dimen name="default_circle_indicator_radius">5dp</dimen>
+    <bool name="default_circle_indicator_snap">false</bool>
+    <color name="default_circle_indicator_stroke_color">#FFDDDDDD</color>
+    <dimen name="default_circle_indicator_stroke_width">2dp</dimen>
+    <attr name="vpiCirclePageIndicatorStyle" format="reference"/>
+     
+         */
+        public static final int white=0x7f060007;
     }
     public static final class dimen {
-        public static final int above_offset=0x7f050013;
+        public static final int above_offset=0x7f050011;
         public static final int com_facebook_loginview_compound_drawable_padding=0x7f050008;
         public static final int com_facebook_loginview_padding_bottom=0x7f050007;
         public static final int com_facebook_loginview_padding_left=0x7f050004;
@@ -201,11 +203,9 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int com_facebook_tooltip_horizontal_padding=0x7f05000d;
         public static final int com_facebook_usersettingsfragment_profile_picture_height=0x7f050003;
         public static final int com_facebook_usersettingsfragment_profile_picture_width=0x7f050002;
-        public static final int default_circle_indicator_radius=0x7f05000e;
-        public static final int default_circle_indicator_stroke_width=0x7f05000f;
-        public static final int list_padding=0x7f050011;
-        public static final int shadow_width=0x7f050012;
-        public static final int slidingmenu_offset=0x7f050010;
+        public static final int list_padding=0x7f05000f;
+        public static final int shadow_width=0x7f050010;
+        public static final int slidingmenu_offset=0x7f05000e;
     }
     public static final class drawable {
         public static final int actionbar_selector=0x7f020000;
@@ -213,7 +213,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int allevents=0x7f020002;
         public static final int background=0x7f020003;
         public static final int bigicon=0x7f020004;
-        public static final int cal26=0x7f020005;
+        public static final int calendar=0x7f020005;
         public static final int clock25=0x7f020006;
         public static final int com_facebook_button_blue=0x7f020007;
         public static final int com_facebook_button_blue_focused=0x7f020008;
@@ -365,8 +365,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int where=0x7f040026;
     }
     public static final class integer {
-        public static final int default_circle_indicator_orientation=0x7f0a0000;
-        public static final int num_cols=0x7f0a0001;
+        public static final int num_cols=0x7f0a0000;
     }
     public static final class layout {
         public static final int activity=0x7f030000;

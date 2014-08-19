@@ -64,6 +64,7 @@ public class Event implements Parcelable {
 			this.cover_url = object.getString("primary_image_url");
 			this.url = object.getString("url");
 			fbStatus = "declined";
+			
 		}
 		catch(JSONException e){
 			

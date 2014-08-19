@@ -61,6 +61,7 @@ public class SchoolActivity extends Activity{
         allUniv = new TreeMap<String, String>();
         
         schoolsURL = ENVRouter.schoolsURL();
+        System.out.println(schoolsURL);
         new GetSchoolEvents().execute();
         context = this;
         schoolAdapter = new SchoolAdapter(context, allUniv);
@@ -85,7 +86,7 @@ public class SchoolActivity extends Activity{
 	            HttpClient httpclient = new DefaultHttpClient();
 
 	            // 2. make POST request to the given URL
-	            String url = ENVRouter.getENV() + ENVRouter.updateUserURL + User.id + "?authentication_token="+User.authToken;
+	            String url = ENVRouter.updateUserURL();
 	            HttpPut httpPost = new HttpPut(url);
 	            Log.i("API", url);
 	            String json = "";

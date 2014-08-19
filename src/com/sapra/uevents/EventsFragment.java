@@ -37,8 +37,8 @@ public class EventsFragment extends Fragment {
     private ListView lv;
     private int currentVisibleItemCount;
 	private int currentScrollState;
-	private ArrayList<Event> allEvents;
-    private ArrayList<TextView> allNewDates;
+//	private ArrayList<Event> allEvents;
+//    private ArrayList<TextView> allNewDates;
     protected ArrayList<Object> listView;
 	private CustomAdapter adapter;
 	private String url;
@@ -48,8 +48,8 @@ public class EventsFragment extends Fragment {
 	private String tag;
 	public EventsFragment(){
 		listView = new ArrayList<Object>();
-		allNewDates = new ArrayList<TextView>();
-        allEvents = new ArrayList<Event>();
+//		allNewDates = new ArrayList<TextView>();
+//        allEvents = new ArrayList<Event>();
 	}
 	public static final EventsFragment newInstance(String url, Session session, Context context, String tag){
 		EventsFragment ef = new EventsFragment();
@@ -83,13 +83,6 @@ public class EventsFragment extends Fragment {
 						if (possibleTextView instanceof TextView){
 							date.setText(((TextView) possibleTextView).getText());
 						}
-						if (possibleTextView instanceof Event){
-							possibleTextView = (Event) possibleTextView;
-							String startDate = ((Event) possibleTextView).getStart_date();
-							if (!(date.getText().equals(startDate))){
-								date.setText(startDate);
-							}
-						}
 			            boolean firstItemVisible = lv.getFirstVisiblePosition() == 0;
 			            boolean topOfFirstItemVisible = lv.getChildAt(0).getTop() == 0;
 			            swipeRefreshEnabled = firstItemVisible && topOfFirstItemVisible;
@@ -98,7 +91,7 @@ public class EventsFragment extends Fragment {
 					}
 					finally{
 					    currentVisibleItemCount = visibleItemCount;
-				        swipeView.setEnabled(swipeRefreshEnabled);
+					    swipeView.setEnabled(swipeRefreshEnabled);
 					}
 			}
 			public void onScrollStateChanged(AbsListView arg0, int scrollState) {
@@ -190,9 +183,9 @@ public class EventsFragment extends Fragment {
 		protected Boolean doInBackground(Void... params){
 			event_groups = new JSONParser().getNewJSONFromUrl(url, tag);
 				listView.clear();
-				allEvents.clear();
-				allNewDates.clear();
-				if (event_groups != null){
+//				allEvents.clear();
+//				allNewDates.clear();
+				if (event_groups != null && event_groups.length() != 0){
 					for (int i = 0; i < event_groups.length(); i++){
 						try{
 							JSONObject event_group = (JSONObject) event_groups.get(i);
@@ -202,11 +195,11 @@ public class EventsFragment extends Fragment {
 								String rawDate = (String) event_group.get("date");
 								String formattedDate = DateFormatter.formatADate(rawDate, "yyyy-MM-dd", "EEEE, MMMM dd"); 
 								newDate.setText(formattedDate);
-								allNewDates.add(newDate);
+//								allNewDates.add(newDate);
 								listView.add(newDate);
 								for (int j = 0; j < events.length(); j++){
 									Event event = new Event((JSONObject) events.get(j));
-									allEvents.add(event);
+//									allEvents.add(event);
 									listView.add(event);
 								}
 							}
@@ -214,9 +207,13 @@ public class EventsFragment extends Fragment {
 							e.printStackTrace();
 						}
 					}
-			    	return true;
 				}
-			return false;
+				else{
+					TextView newDate = new TextView(context); 
+					newDate.setText("No events under this category.");
+					listView.add(newDate);
+				}
+			return true;
 		}
 		protected void onProgressUpdate(Integer...a){ }
 		public void onPostExecute(Boolean success){

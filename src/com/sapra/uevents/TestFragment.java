@@ -30,9 +30,13 @@ public final class TestFragment extends Fragment {
 	private String mContent = "";
     private int drawableId;
     private Session mSession = null;
-    public TestFragment(int imageId, String mContent){
-    	this.mContent = mContent;
-    	this.drawableId = imageId;
+    public TestFragment(){
+    }
+    public static TestFragment newInstance(int imageId, String mContent){
+    	TestFragment tf = new TestFragment();
+    	tf.mContent = mContent;
+    	tf.drawableId = imageId;
+    	return tf;
     }
     @Override
     public void onCreate(Bundle savedInstanceState) {
