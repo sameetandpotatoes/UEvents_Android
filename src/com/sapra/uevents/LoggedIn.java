@@ -1,5 +1,7 @@
 package com.sapra.uevents;
 
+import java.lang.reflect.Method;
+
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.Activity;
@@ -8,6 +10,7 @@ import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.Typeface;
@@ -37,7 +40,6 @@ public class LoggedIn extends FragmentActivity implements ActionBar.TabListener{
 	private static boolean firstTime = true;
 	private static String tag = "";
 	private static String eventsURL, myEventsURL;
-	public static Typeface bold, regular;
 	
 	DemoCollectionPagerAdapter mDemoCollectionPagerAdapter;
 	ViewPager mViewPager;
@@ -54,14 +56,12 @@ public class LoggedIn extends FragmentActivity implements ActionBar.TabListener{
             .build();
         
         setBounds();
+        forceTabs();
         
         mDemoCollectionPagerAdapter = new DemoCollectionPagerAdapter(getSupportFragmentManager());
         session = (Session) getIntent().getExtras().get("Session");
         
-        bold = Typeface.createFromAsset(getAssets(), Constants.BOLD);
-        regular = Typeface.createFromAsset(getAssets(), Constants.REGULAR);
-        
-        context = this;      
+        context = this;   
         eventsURL = ENVRouter.eventsURL();
         myEventsURL = ENVRouter.myEventsURL();
         
@@ -147,6 +147,12 @@ public class LoggedIn extends FragmentActivity implements ActionBar.TabListener{
         return (networkInfo != null && networkInfo.isConnected());
     }
     @Override
+    public void onConfigurationChanged(final Configuration config) {
+        super.onConfigurationChanged(config);
+        setBounds();
+        forceTabs(); // Handle orientation changes.
+    }
+    @Override
     public void onStart(){
     	super.onStart();
     	EasyTracker.getInstance(this).activityStart(this);
@@ -156,6 +162,23 @@ public class LoggedIn extends FragmentActivity implements ActionBar.TabListener{
     	super.onStop();
     	EasyTracker.getInstance(this).activityStop(this);
     }
+    /**
+     * Forces the tabs to remain below the action bar
+     */
+    public void forceTabs() {
+        try {
+            final ActionBar actionBar = getActionBar();
+            final Method setHasEmbeddedTabsMethod = actionBar.getClass()
+                .getDeclaredMethod("setHasEmbeddedTabs", boolean.class);
+            setHasEmbeddedTabsMethod.setAccessible(true);
+            setHasEmbeddedTabsMethod.invoke(actionBar, false);
+        }
+        catch(final Exception e) {
+            // Handle issues as needed: log, warn user, fallback etc
+            // This error is safe to ignore, standard tabs will appear.
+        }
+    }
+    
     public Handler mUiHandler = new Handler(Looper.getMainLooper());
 
     public void setActionBarTitle(final CharSequence title, final boolean showHomeAsUp)
@@ -217,25 +240,25 @@ public class LoggedIn extends FragmentActivity implements ActionBar.TabListener{
         public Fragment getItem(int i) {
         	switch(i){
 	        	case 0: //All Events
-	        		return EventsFragment.newInstance(eventsURL, session, context, "All");
+	        		return EventsFragment.newInstance(eventsURL, session, "All");
 	        	case 1:
 	        		return new Tag();
 	        	case 2: //My Events
-	        		return EventsFragment.newInstance(myEventsURL, session, context, "My");
+	        		return EventsFragment.newInstance(myEventsURL, session, "My");
 	        	case 3:
 	        		return SettingsFragment.newInstance();
 	        	case Constants.FOOD:
-	        		return EventsFragment.newInstance(eventsURL+"&filter="+Constants.FOODTAG, session, context, Constants.FOODTAG);
+	        		return EventsFragment.newInstance(eventsURL+"&filter="+Constants.FOODTAG, session, Constants.FOODTAG);
 	        	case Constants.NIGHTLIFE:
-	        		return EventsFragment.newInstance(eventsURL+"&filter="+Constants.NIGHTLIFETAG, session, context, Constants.NIGHTLIFETAG);
+	        		return EventsFragment.newInstance(eventsURL+"&filter="+Constants.NIGHTLIFETAG, session, Constants.NIGHTLIFETAG);
 	        	case Constants.MUSIC:
-	        		return EventsFragment.newInstance(eventsURL+"&filter="+Constants.MUSICTAG, session, context, Constants.MUSICTAG);
+	        		return EventsFragment.newInstance(eventsURL+"&filter="+Constants.MUSICTAG, session, Constants.MUSICTAG);
 	        	case Constants.OFF_CAMPUS:
-	        		return EventsFragment.newInstance(eventsURL+"&filter="+Constants.OFF_CAMPUSTAG, session, context, Constants.OFF_CAMPUSTAG);
+	        		return EventsFragment.newInstance(eventsURL+"&filter="+Constants.OFF_CAMPUSTAG, session, Constants.OFF_CAMPUSTAG);
 	        	case Constants.SPORTS:
-	        		return EventsFragment.newInstance(eventsURL+"&filter="+Constants.SPORTSTAG, session, context, Constants.SPORTSTAG);
+	        		return EventsFragment.newInstance(eventsURL+"&filter="+Constants.SPORTSTAG, session, Constants.SPORTSTAG);
 	        	default:
-	        		return EventsFragment.newInstance(eventsURL, session, context, "All");
+	        		return EventsFragment.newInstance(eventsURL, session, "All");
         	}
         }
 

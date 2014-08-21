@@ -24,6 +24,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.graphics.Point;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -35,6 +36,7 @@ import android.text.style.AbsoluteSizeSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.TextAppearanceSpan;
 import android.util.Log;
+import android.view.Display;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -65,9 +67,10 @@ public class SingleListItem extends Activity{
         getActionBar().setDisplayHomeAsUpEnabled(true);
         getActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor(getResources().getString(R.color.uchicago))));
         setContentView(R.layout.single_list_item_view);
-        regular = LoggedIn.regular;
-        bold  = LoggedIn.bold;
+        regular = Typeface.createFromAsset(getAssets(), Constants.REGULAR);
+        bold = Typeface.createFromAsset(getAssets(), Constants.BOLD);
         alreadyCreatedEvent = false;
+        
         LinearLayout llTags = (LinearLayout) findViewById(R.id.tags);
         TextView txtDescription = (TextView) findViewById(R.id.lbl_desc);
         txtDescription.setTypeface(regular);
@@ -128,11 +131,11 @@ public class SingleListItem extends Activity{
 						//Posted successfully
 						//Let's tell the user
 		        		if (selectedEvent.getStatus().equals("declined")){
-		        			Toast.makeText(getApplicationContext(), "Not going to " + selectedEvent.getName(), Toast.LENGTH_SHORT).show();
+		        			Toast.makeText(SingleListItem.this, "Not going to " + selectedEvent.getName(), Toast.LENGTH_SHORT).show();
 		        		}else if (selectedEvent.getStatus().equals("attending")){	
-	        				Toast.makeText(getApplicationContext(), "Going to " + selectedEvent.getName(), Toast.LENGTH_SHORT).show();
+	        				Toast.makeText(SingleListItem.this, "Going to " + selectedEvent.getName(), Toast.LENGTH_SHORT).show();
 	        			} else{
-	        				Toast.makeText(getApplicationContext(), "Interested in " + selectedEvent.getName(), Toast.LENGTH_SHORT).show();
+	        				Toast.makeText(SingleListItem.this, "Interested in " + selectedEvent.getName(), Toast.LENGTH_SHORT).show();
 	        			}
 		        		((RadioButton) findViewById(R.id.notgoing)).setBackground(getResources().getDrawable(R.drawable.rightborder));
 		        		((RadioButton) findViewById(R.id.notgoing)).setTextColor(getResources().getColor(R.color.uchicago));
@@ -142,7 +145,6 @@ public class SingleListItem extends Activity{
 						((RadioButton) findViewById(R.id.going)).setTextColor(getResources().getColor(R.color.uchicago));
 						if (checkedId == R.id.notgoing){
 							((RadioButton) findViewById(checkedId)).setBackground(getResources().getDrawable(R.drawable.leftborderactive));
-//							((RadioButton) findViewById(checkedId)).setBackgroundColor(getResources().getColor(R.color.uchicago));
 						} else{
 							((RadioButton) findViewById(checkedId)).setBackground(getResources().getDrawable(R.drawable.rightborderactive));
 						}
@@ -399,10 +401,8 @@ public class SingleListItem extends Activity{
     @Override
     public void onResume(){
     	super.onResume();
-    	if (this.getParent() != null){
-    		((LoggedIn) this.getParent()).setBounds();
-    		txtAttending.setWidth(Constants.width/3);
-    	}
+    	setBounds();
+    	txtAttending.setWidth(Constants.width/3);
     }
     private void shareEvent(){
         Resources resources = getResources();
@@ -461,4 +461,11 @@ public class SingleListItem extends Activity{
         openInChooser.putExtra(Intent.EXTRA_INITIAL_INTENTS, extraIntents);
         startActivity(openInChooser);
     }
+    public void setBounds() {
+    	Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        Constants.width = size.x;
+        Constants.height = size.y;
+	}
 }

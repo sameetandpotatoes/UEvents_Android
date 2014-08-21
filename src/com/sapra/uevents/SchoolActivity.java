@@ -60,8 +60,6 @@ public class SchoolActivity extends Activity{
         listView = (ListView) this.findViewById(android.R.id.list);
         allUniv = new TreeMap<String, String>();
         
-        schoolsURL = ENVRouter.schoolsURL();
-        System.out.println(schoolsURL);
         new GetSchoolEvents().execute();
         context = this;
         schoolAdapter = new SchoolAdapter(context, allUniv);
@@ -154,7 +152,7 @@ public class SchoolActivity extends Activity{
     }
 	class GetSchoolEvents extends AsyncTask<Void, Void, Boolean>{
 		protected Boolean doInBackground(Void... params){
-			JSONArray schools = new JSONParser().getJSONFromUrl(schoolsURL, "Schools");
+			JSONArray schools = new JSONParser().getSchools();
 			if (schools != null){
 				try{
 					for (int i = 0 ; i < schools.length(); i++){

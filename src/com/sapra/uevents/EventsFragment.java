@@ -1,16 +1,12 @@
 package com.sapra.uevents;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
 import java.util.ArrayList;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
@@ -18,8 +14,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
@@ -37,28 +35,23 @@ public class EventsFragment extends Fragment {
     private ListView lv;
     private int currentVisibleItemCount;
 	private int currentScrollState;
-//	private ArrayList<Event> allEvents;
-//    private ArrayList<TextView> allNewDates;
-    protected ArrayList<Object> listView;
+    private ArrayList<Object> listView;
 	private CustomAdapter adapter;
 	private String url;
 	private JSONArray event_groups;
 	private Session session;
 	private SwipeRefreshLayout swipeView;
 	private String tag;
+	private Typeface bold;
 	public EventsFragment(){
 		listView = new ArrayList<Object>();
-//		allNewDates = new ArrayList<TextView>();
-//        allEvents = new ArrayList<Event>();
 	}
-	public static final EventsFragment newInstance(String url, Session session, Context context, String tag){
+	public static final EventsFragment newInstance(String url, Session session, String tag){
 		EventsFragment ef = new EventsFragment();
 		String noAnd = url.replaceAll(" & ", "%20%26%20");
 		String noSpaces = noAnd.replaceAll(" ", "%20");
 		ef.url = noSpaces;
 		ef.session = session;
-//		ef.context = context;
-//		ef.context = getActivity().getApplicationContext();
 		ef.tag = tag;
         return ef;
 	}
@@ -66,7 +59,23 @@ public class EventsFragment extends Fragment {
 	public void onCreate(Bundle savedState) {
 	    super.onCreate(savedState);
 	    setRetainInstance(true); // handle rotations gracefully
+	    setHasOptionsMenu(true);
 	}
+	@Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.index, menu);
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+       switch (item.getItemId()) {
+          case R.id.refresh:
+             getEvents();
+             return true;
+          default:
+             return super.onOptionsItemSelected(item);
+       }
+    }
 	private void setListeners(){
         lv.setOnItemClickListener(new OnItemClickListener(){
 			public void onItemClick(AdapterView<?> arg0, View arg1,
@@ -108,28 +117,24 @@ public class EventsFragment extends Fragment {
 	public void onDestroy(){
 		super.onDestroy();
 	}
-	@Override
-	public void onHiddenChanged(boolean hidden){
-		if (!hidden && tag.equals("My Events")){
-			getEvents();
-		}
-	}
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
 	    if (isAdded()){
 	    	((LoggedIn) getActivity()).setActionBarTitle("All Events", true);
-	    	this.context = getActivity().getApplicationContext();
+	    	if (context == null){
+	    		context = getActivity().getApplicationContext();
+	    		bold = Typeface.createFromAsset(context.getAssets(), Constants.BOLD);
+	    	}
 	        View rootView = inflater.inflate(R.layout.activity, container, false);
-	        Typeface bold  = LoggedIn.bold;
 	        date = (TextView) rootView.findViewById(R.id.static_date);
 	        date.setTypeface(bold);
 	        lv = (ListView) rootView.findViewById(android.R.id.list);
 	        swipeView = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe);
 	        swipeView.setColorScheme(
-	        		R.color.uchicago_secondary,
-	        		R.color.uchicago, 
-	                R.color.uchicago_dark, 
-	                R.color.getstarted_light);
+	        		R.color.swipeOne,
+	        		R.color.swipeTwo,
+	        		R.color.swipeThree,
+	        		R.color.swipeFour);
 	        swipeView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
 	            @Override
 	            public void onRefresh() {
@@ -182,37 +187,33 @@ public class EventsFragment extends Fragment {
 		}
 		protected Boolean doInBackground(Void... params){
 			event_groups = new JSONParser().getNewJSONFromUrl(url, tag);
-				listView.clear();
-//				allEvents.clear();
-//				allNewDates.clear();
-				if (event_groups != null && event_groups.length() != 0){
-					for (int i = 0; i < event_groups.length(); i++){
-						try{
-							JSONObject event_group = (JSONObject) event_groups.get(i);
-							JSONArray events = (JSONArray) event_group.get("events");
-							if (events.length() > 0){
-								TextView newDate = new TextView(context);
-								String rawDate = (String) event_group.get("date");
-								String formattedDate = DateFormatter.formatADate(rawDate, "yyyy-MM-dd", "EEEE, MMMM dd"); 
-								newDate.setText(formattedDate);
-//								allNewDates.add(newDate);
-								listView.add(newDate);
-								for (int j = 0; j < events.length(); j++){
-									Event event = new Event((JSONObject) events.get(j));
-//									allEvents.add(event);
-									listView.add(event);
-								}
+			listView.clear();
+			if (event_groups != null && event_groups.length() != 0){
+				for (int i = 0; i < event_groups.length(); i++){
+					try{
+						JSONObject event_group = (JSONObject) event_groups.get(i);
+						JSONArray events = (JSONArray) event_group.get("events");
+						if (events.length() > 0){
+							TextView newDate = new TextView(context);
+							String rawDate = (String) event_group.get("date");
+							String formattedDate = DateFormatter.formatADate(rawDate, "yyyy-MM-dd", "EEEE, MMMM dd"); 
+							newDate.setText(formattedDate);
+							listView.add(newDate);
+							for (int j = 0; j < events.length(); j++){
+								Event event = new Event((JSONObject) events.get(j));
+								listView.add(event);
 							}
-						} catch(JSONException e){
-							e.printStackTrace();
 						}
+					} catch(JSONException e){
+						e.printStackTrace();
 					}
 				}
-				else{
-					TextView newDate = new TextView(context); 
-					newDate.setText("No events under this category.");
-					listView.add(newDate);
-				}
+			}
+			else{
+				TextView newDate = new TextView(context); 
+				newDate.setText("No events under this category.");
+				listView.add(newDate);
+			}
 			return true;
 		}
 		protected void onProgressUpdate(Integer...a){ }

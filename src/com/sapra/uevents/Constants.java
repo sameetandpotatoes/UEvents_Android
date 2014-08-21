@@ -23,5 +23,4 @@ public class Constants {
 	public static ImageLoaderConfiguration config;
 	public static int width;
 	public static int height;
-	public static String auth_token = "";
 }

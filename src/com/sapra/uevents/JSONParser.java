@@ -26,7 +26,8 @@ public class JSONParser {
 
     public JSONParser() {}
 
-    public JSONArray getJSONFromUrl(String url, String filter){
+    public JSONArray getSchools(){
+    	String url = ENVRouter.schoolsURL();
     	Log.i("API", url);
     	StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
     	StrictMode.setThreadPolicy(policy);
@@ -56,7 +57,6 @@ public class JSONParser {
             StringBuilder sb = new StringBuilder();
             String line = null;
             while ((line = reader.readLine()) != null) {
-                //json += line;
                 sb.append(line + "\n");
             }
             is.close();
@@ -65,7 +65,6 @@ public class JSONParser {
             Log.e("Buffer Error", "Error converting result " + e.toString());
             return null;
         }
-        Log.i("API", "JSON: " + json);
         // try parse the string to a JSON object
         try {
             jObj = new JSONArray(json);
@@ -73,7 +72,6 @@ public class JSONParser {
             Log.e("JSON Parser", "Error parsing data " + e.toString());
             return null;
         }
-        // return JSON String
         return jObj;
     }
     /**
@@ -136,7 +134,7 @@ public class JSONParser {
         	if (filter.equals("All")){
             	events = (JSONArray) jObj.get("event_groups");
             } else if (filter.equals("My")){
-            	events = (JSONArray) jObj.getJSONObject("user").getJSONArray("events");
+            	events = (JSONArray) jObj.getJSONObject("user").getJSONArray("event_groups");
             } else{ //any tag
             	events = (JSONArray) jObj.get("event_groups");
             }

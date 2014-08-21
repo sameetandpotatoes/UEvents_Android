@@ -171,20 +171,13 @@ containing a value of this type.
         public static final int getstarted=0x7f06000e;
         public static final int getstarted_light=0x7f06000f;
         public static final int light_gray=0x7f060009;
+        public static final int swipeFour=0x7f060013;
+        public static final int swipeOne=0x7f060010;
+        public static final int swipeThree=0x7f060012;
+        public static final int swipeTwo=0x7f060011;
         public static final int uchicago=0x7f06000b;
         public static final int uchicago_dark=0x7f06000d;
         public static final int uchicago_secondary=0x7f06000c;
-        /**      <bool name="default_circle_indicator_centered">true</bool>
-    <color name="default_circle_indicator_fill_color">#d3d3d3</color>
-    <color name="default_circle_indicator_page_color">#00000000</color>
-    <integer name="default_circle_indicator_orientation">0</integer>
-    <dimen name="default_circle_indicator_radius">5dp</dimen>
-    <bool name="default_circle_indicator_snap">false</bool>
-    <color name="default_circle_indicator_stroke_color">#FFDDDDDD</color>
-    <dimen name="default_circle_indicator_stroke_width">2dp</dimen>
-    <attr name="vpiCirclePageIndicatorStyle" format="reference"/>
-     
-         */
         public static final int white=0x7f060007;
     }
     public static final class dimen {
@@ -231,7 +224,7 @@ containing a value of this type.
         public static final int com_facebook_list_section_header_background=0x7f020014;
         public static final int com_facebook_loginbutton_silver=0x7f020015;
         public static final int com_facebook_logo=0x7f020016;
-        public static final int com_facebook_picker_default_separator_color=0x7f020050;
+        public static final int com_facebook_picker_default_separator_color=0x7f020051;
         public static final int com_facebook_picker_item_background=0x7f020017;
         public static final int com_facebook_picker_list_focused=0x7f020018;
         public static final int com_facebook_picker_list_longpressed=0x7f020019;
@@ -275,27 +268,28 @@ containing a value of this type.
         public static final int nothing=0x7f02003f;
         public static final int offcampus=0x7f020040;
         public static final int placeholder=0x7f020041;
-        public static final int rightborder=0x7f020042;
-        public static final int rightborderactive=0x7f020043;
-        public static final int settings=0x7f020044;
-        public static final int shadow=0x7f020045;
-        public static final int share=0x7f020046;
-        public static final int sports=0x7f020047;
-        public static final int tab_bar_background=0x7f020048;
-        public static final int tab_bar_background_selected=0x7f020049;
-        public static final int tab_bar_background_selected_pressed=0x7f02004a;
-        public static final int tag25=0x7f02004b;
-        public static final int tags=0x7f02004c;
-        public static final int topdownborder=0x7f02004d;
-        public static final int toprightdownborder=0x7f02004e;
-        public static final int uevents=0x7f02004f;
+        public static final int refresh26=0x7f020042;
+        public static final int rightborder=0x7f020043;
+        public static final int rightborderactive=0x7f020044;
+        public static final int settings=0x7f020045;
+        public static final int shadow=0x7f020046;
+        public static final int share=0x7f020047;
+        public static final int sports=0x7f020048;
+        public static final int tab_bar_background=0x7f020049;
+        public static final int tab_bar_background_selected=0x7f02004a;
+        public static final int tab_bar_background_selected_pressed=0x7f02004b;
+        public static final int tag25=0x7f02004c;
+        public static final int tags=0x7f02004d;
+        public static final int topdownborder=0x7f02004e;
+        public static final int toprightdownborder=0x7f02004f;
+        public static final int uevents=0x7f020050;
     }
     public static final class id {
         public static final int all=0x7f040040;
         public static final int anotherOneLine=0x7f040039;
         public static final int attending=0x7f04003a;
         public static final int background=0x7f040020;
-        public static final int cal26=0x7f040046;
+        public static final int cal26=0x7f040047;
         public static final int com_facebook_body_frame=0x7f040018;
         public static final int com_facebook_button_xout=0x7f04001a;
         public static final int com_facebook_login_activity_progress_bar=0x7f040008;
@@ -338,7 +332,7 @@ containing a value of this type.
         public static final int ll=0x7f04002f;
         public static final int location=0x7f040032;
         public static final int loginLL=0x7f040028;
-        public static final int menu_item_share=0x7f040047;
+        public static final int menu_item_share=0x7f040048;
         public static final int music=0x7f040042;
         public static final int name=0x7f040027;
         public static final int new_date=0x7f040022;
@@ -349,6 +343,7 @@ containing a value of this type.
         public static final int oneLine=0x7f040030;
         public static final int pager=0x7f040029;
         public static final int picker_subtitle=0x7f040015;
+        public static final int refresh=0x7f040046;
         public static final int school=0x7f04002b;
         public static final int school_selected=0x7f04002d;
         public static final int segment_text=0x7f040035;
@@ -396,7 +391,8 @@ containing a value of this type.
         public static final int tags=0x7f030019;
     }
     public static final class menu {
-        public static final int main=0x7f0b0000;
+        public static final int index=0x7f0b0000;
+        public static final int main=0x7f0b0001;
     }
     public static final class string {
         public static final int RSVP=0x7f07001f;

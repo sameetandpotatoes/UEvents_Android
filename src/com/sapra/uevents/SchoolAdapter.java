@@ -41,7 +41,7 @@ public class SchoolAdapter extends BaseAdapter{
     	if (convertView == null){
             convertView = LayoutInflater.from(context).inflate(R.layout.school_list_item, parent, false);
     	}
-    	Typeface regular = LoggedIn.regular;
+    	Typeface regular = Typeface.createFromAsset(context.getAssets(), Constants.REGULAR);
     	
         Map.Entry<String, String> item = getItem(position);
         final TextView school = ((TextView) convertView.findViewById(R.id.school));

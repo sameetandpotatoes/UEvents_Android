@@ -42,7 +42,6 @@ public class Banner extends ImageView {
     }
     /**
      * Recycles bitmap to save memory
-     *
      */
     public void onDestroy(){
     	Drawable drawable = this.getDrawable();

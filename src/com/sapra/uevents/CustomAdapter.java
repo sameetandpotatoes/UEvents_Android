@@ -16,7 +16,7 @@ import android.widget.TextView;
 public class CustomAdapter extends BaseAdapter {
     
     private ArrayList<Object> data;
-    private static LayoutInflater inflater=null;
+    private LayoutInflater inflater=null;
     private ImageLoader imageLoader;
     
     public CustomAdapter(ArrayList<Object> listView){
@@ -51,8 +51,8 @@ public class CustomAdapter extends BaseAdapter {
     	Event tempEvent = null;
     	Context context = parent.getContext();
 	    inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		view = inflater.inflate(R.layout.list_item, parent, false);
-        Typeface bold = LoggedIn.bold;
+	    view = inflater.inflate(R.layout.list_item, parent, false);
+        Typeface bold = Typeface.createFromAsset(context.getAssets(), Constants.BOLD);
     	TextView name = (TextView) view.findViewById(R.id.name);
     	TextView when = (TextView) view.findViewById(R.id.when);
     	TextView where = (TextView) view.findViewById(R.id.where);
@@ -81,24 +81,18 @@ public class CustomAdapter extends BaseAdapter {
 	    			newDate.setVisibility(View.GONE);
 	    		}
 	    	}
+	    	 //One last change to the UI for the last element
+	        if (position == data.size() - 1){
+	    		RelativeLayout rl = (RelativeLayout) view.findViewById(R.id.event);
+	    		rl.setPadding(0, 0, 0, 0);
+	        }
         }
         vh = null;
         context = null;
         bold = null;
-        
-        //One last change to the UI for the last element
-        if (position == data.size() - 1){
-    		RelativeLayout rl = (RelativeLayout) view.findViewById(R.id.event);
-    		rl.setPadding(0, 0, 0, 0);
-        }
     	return view;
     }
 }
 class ViewHolder{
-	TextView name;
-	TextView when;
-	TextView where;
-	TextView newDate;
-	ImageView thumb_image;
 	int position;
 }

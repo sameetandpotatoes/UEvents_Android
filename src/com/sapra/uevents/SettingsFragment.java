@@ -18,6 +18,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class SettingsFragment extends Fragment{
 	private ImageLoader imageLoader;
+	private Typeface regular;
 	public SettingsFragment(){
 		imageLoader = ImageLoader.getInstance();
 		imageLoader.init(Constants.config);
@@ -35,7 +36,9 @@ public class SettingsFragment extends Fragment{
             Bundle savedInstanceState) {
 		if (isAdded()){
 			View rootView = inflater.inflate(R.layout.settings, container, false);
-			Typeface regular = LoggedIn.regular;
+			if (regular == null)
+				regular = Typeface.createFromAsset(container.getContext().getAssets(), Constants.REGULAR);
+			
 			TextView school = (TextView) rootView.findViewById(R.id.school_selected);
 			school.setTextColor(Color.BLACK);
 			school.setText(User.name + "\n" + User.schoolName);
@@ -47,7 +50,6 @@ public class SettingsFragment extends Fragment{
 			loginView.setBackgroundColor(getResources().getColor(R.color.uchicago));
 			loginView.setOnClickListener(new OnClickListener(){
 				public void onClick(View arg0) {
-//					User.clear();
 					((LoggedIn) getActivity()).onClickLogout();
 				}
 			});

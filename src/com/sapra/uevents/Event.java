@@ -27,7 +27,7 @@ public class Event implements Parcelable {
 	private String fbStatus;
 	private String time;
 	private String rawStartTime, rawEndTime;
-	public static final int CHAR_LENGTH = 35;
+	public static final int CHAR_LENGTH = 40;
 	private ArrayList<String> tags = new ArrayList<String>();
 	public Event(JSONObject object){
 		try{
@@ -42,9 +42,7 @@ public class Event implements Parcelable {
 																	: (object.getString("location"));
 			this.description = object.getString("description");
 			
-//			this.start_date 	= DateFormatter.formatDate(object.getString("start_time"));
-//			this.shortStartDate = DateFormatter.shortDate(object.getString("start_time"));
-			this.start_date = DateFormatter.formatADate(object.getString("start_date"), "yyyy-MM-dd", "EEEE, MMMM dd");
+			this.start_date 	= DateFormatter.formatADate(object.getString("start_date"), "yyyy-MM-dd", "EEEE, MMMM dd");
 			this.shortStartDate = DateFormatter.formatADate(object.getString("start_date"), "yyyy-MM-dd", "MM/dd/yy");
 			this.start_time 	= DateFormatter.formatTime(object.getString("start_time"));
 			this.end_date 		= DateFormatter.formatDate(object.getString("end_time"));
@@ -135,7 +133,6 @@ public class Event implements Parcelable {
 	}
 	@Override
 	public int describeContents() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 	@Override
