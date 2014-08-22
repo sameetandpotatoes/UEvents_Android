@@ -25,8 +25,6 @@ import com.facebook.widget.LoginButton;
 public final class TestFragment extends Fragment {
     private LoginButton lb;
 	private UiLifecycleHelper uiHelper;
-	private boolean loggedInAlready = false;
-	private Typeface regular, bold;
 	private String mContent = "";
     private int drawableId;
     private Session mSession = null;
@@ -42,8 +40,6 @@ public final class TestFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     	uiHelper = new UiLifecycleHelper(getActivity(), callback);
-    	regular = Typeface.createFromAsset(getActivity().getAssets(), Constants.REGULAR);
-    	bold = Typeface.createFromAsset(getActivity().getAssets(), Constants.BOLD);
     	uiHelper.onCreate(savedInstanceState);
         Settings.addLoggingBehavior(LoggingBehavior.INCLUDE_ACCESS_TOKENS);
         Session session = Session.getActiveSession();
@@ -55,6 +51,7 @@ public final class TestFragment extends Fragment {
                 session = new Session(getActivity());
                 Context c = getActivity().getApplicationContext();
                 session = new Session.Builder(c).setApplicationId(c.getString(ENVRouter.getFacebookAppId())).build();
+                c = null;
             }
             Session.setActiveSession(session);
             if (session.getState().equals(SessionState.CREATED_TOKEN_LOADED)) {
@@ -102,10 +99,6 @@ public final class TestFragment extends Fragment {
 				onClickLogin();
 			}
 		});
-        
-        bold = null;
-        regular = null;
-        
     	return view;
     }
     private boolean isSessionChanged(Session session) {

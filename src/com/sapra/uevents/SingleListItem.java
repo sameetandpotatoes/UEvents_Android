@@ -54,8 +54,8 @@ import com.facebook.Session;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.nostra13.universalimageloader.core.ImageLoader;
 public class SingleListItem extends Activity{
-    public static Session activeSession;
-    public static String event_id;
+    private Session activeSession;
+    private String event_id;
 	private SegmentedRadioGroup segmentText;
 	private Event selectedEvent;
 	private String userId;

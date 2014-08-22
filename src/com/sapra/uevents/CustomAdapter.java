@@ -60,7 +60,7 @@ public class CustomAdapter extends BaseAdapter {
         name.setTypeface(bold);
         when.setTypeface(bold);
         where.setTypeface(bold);
-        if (data.size() != 0){
+        if (data.size() != 0 && position < data.size()){
 	    	if (data.get(position) instanceof Event){
 	    		tempEvent = (Event) data.get(position);
 				name.setText(tempEvent.getName());

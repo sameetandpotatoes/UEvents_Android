@@ -29,6 +29,13 @@
             android:windowSoftInputMode="adjustResize">
         </activity>
         <activity
+            android:name="com.sapra.uevents.TutorialActivity"
+            android:label="@string/app_name"
+            android:configChanges="orientation"
+    		android:launchMode="singleTask"
+            android:windowSoftInputMode="adjustResize">
+        </activity>
+        <activity
                 android:name="com.sapra.uevents.LoggedIn"
             	android:label="@string/app_name"
             	android:launchMode="singleTop"

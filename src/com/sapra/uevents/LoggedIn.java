@@ -36,12 +36,11 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 public class LoggedIn extends FragmentActivity implements ActionBar.TabListener{
     
 	private static Session session;
-	private static Context context;
 	private static boolean firstTime = true;
 	private static String tag = "";
 	private static String eventsURL, myEventsURL;
 	
-	DemoCollectionPagerAdapter mDemoCollectionPagerAdapter;
+	PagerAdapter mPagerAdapter;
 	ViewPager mViewPager;
 	private ViewPager.SimpleOnPageChangeListener PCListener;
     public void onCreate(Bundle savedInstanceState) {
@@ -58,10 +57,9 @@ public class LoggedIn extends FragmentActivity implements ActionBar.TabListener{
         setBounds();
         forceTabs();
         
-        mDemoCollectionPagerAdapter = new DemoCollectionPagerAdapter(getSupportFragmentManager());
+        mPagerAdapter = new PagerAdapter(getSupportFragmentManager());
         session = (Session) getIntent().getExtras().get("Session");
-        
-        context = this;   
+           
         eventsURL = ENVRouter.eventsURL();
         myEventsURL = ENVRouter.myEventsURL();
         
@@ -72,7 +70,7 @@ public class LoggedIn extends FragmentActivity implements ActionBar.TabListener{
         
         mViewPager = (ViewPager) findViewById(R.id.viewPager);
         mViewPager.setOffscreenPageLimit(Constants.PAGES_COUNT);
-        mViewPager.setAdapter(mDemoCollectionPagerAdapter);
+        mViewPager.setAdapter(mPagerAdapter);
         PCListener = new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
@@ -98,11 +96,11 @@ public class LoggedIn extends FragmentActivity implements ActionBar.TabListener{
             }
         };
         mViewPager.setOnPageChangeListener(PCListener);
-        for (int i = 0; i < mDemoCollectionPagerAdapter.getCount(); i++) {
+        for (int i = 0; i < mPagerAdapter.getCount(); i++) {
         	if (i < 4){
         		actionbar.addTab(
         			actionbar.newTab()
-                        .setIcon(mDemoCollectionPagerAdapter.getIconTitle(i))
+                        .setIcon(mPagerAdapter.getIconTitle(i))
                         .setTabListener(this));
         	}
         }
@@ -231,9 +229,9 @@ public class LoggedIn extends FragmentActivity implements ActionBar.TabListener{
         super.onResume();
         setBounds();
     }     
-    public static class DemoCollectionPagerAdapter extends FragmentPagerAdapter {
+    public static class PagerAdapter extends FragmentPagerAdapter {
 
-        public DemoCollectionPagerAdapter(FragmentManager fm) {
+        public PagerAdapter(FragmentManager fm) {
             super(fm);
         }
         @Override
@@ -277,8 +275,7 @@ public class LoggedIn extends FragmentActivity implements ActionBar.TabListener{
             	case 3:
             		return R.drawable.settings;
             	default:
-            		return R.drawable.allevents;
-            			
+            		return R.drawable.allevents;		
             }
         }
     }

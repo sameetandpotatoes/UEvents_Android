@@ -27,7 +27,6 @@ import com.facebook.model.GraphUser;
 import com.google.analytics.tracking.android.EasyTracker;
 
 public class LoginPage extends FragmentActivity {
-   public Context context;
    private TestFragmentAdapter mAdapter;
    private ViewPager mPager;
 	public void onCreate(Bundle savedInstanceState) {
@@ -37,11 +36,10 @@ public class LoginPage extends FragmentActivity {
 		mAdapter = new TestFragmentAdapter(getSupportFragmentManager());
         mPager = (ViewPager)findViewById(R.id.pager);
         mPager.setAdapter(mAdapter);
-        context = this;
     }
     public void loggedIn(){
     	Intent events = new Intent(getApplicationContext(), LoggedIn.class);
-    	onTrimMemory(TRIM_MEMORY_UI_HIDDEN);
+    	onTrimMemory(TRIM_MEMORY_RUNNING_CRITICAL);
     	events.putExtra("Session", Session.getActiveSession());
     	startActivity(events);
     	finish();
@@ -152,7 +150,6 @@ public class LoginPage extends FragmentActivity {
 	}
 	/**
     * Makes request to Facebook and gets user info
-    *
     */
 	public boolean getUserInfo(){
 		Session activeSession = Session.getActiveSession();

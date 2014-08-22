@@ -27,6 +27,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.TypefaceSpan;
@@ -41,7 +42,6 @@ public class SchoolActivity extends Activity{
 	private ListView listView;
 	private Map<String, String>  allUniv;
 	private Context context;
-	private String schoolsURL;
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
 		ActionBar actionBar = getActionBar();
@@ -61,17 +61,16 @@ public class SchoolActivity extends Activity{
         allUniv = new TreeMap<String, String>();
         
         new GetSchoolEvents().execute();
-        context = this;
+        context = getApplicationContext();
         schoolAdapter = new SchoolAdapter(context, allUniv);
         listView.setAdapter(schoolAdapter);
         schoolAdapter.notifyDataSetChanged();
 	}
 	public void sendBackToAPI(String schoolName, String schoolId){
-		//post to api
 		User.schoolId = schoolId;
 		User.schoolName = schoolName;
 		if (postToAPI(schoolId)){
-			loggedIn();
+			tutorialPages();
 		}
 	}
 	 public boolean postToAPI(String schoolId){
@@ -143,11 +142,10 @@ public class SchoolActivity extends Activity{
     	super.onStop();
     	EasyTracker.getInstance(this).activityStop(this);
     }
-	public void loggedIn(){
-    	Intent events = new Intent(getApplicationContext(), LoggedIn.class);
-    	onTrimMemory(TRIM_MEMORY_UI_HIDDEN);
-    	events.putExtra("Session", Session.getActiveSession());
-    	startActivity(events);
+    public void tutorialPages(){
+    	Intent tutorial = new Intent(getApplicationContext(), TutorialActivity.class);
+    	onTrimMemory(TRIM_MEMORY_RUNNING_CRITICAL);
+    	startActivity(tutorial);
     	finish();
     }
 	class GetSchoolEvents extends AsyncTask<Void, Void, Boolean>{
