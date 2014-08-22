@@ -15,13 +15,12 @@ import android.widget.TextView;
 
 import com.facebook.widget.LoginButton;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 public class SettingsFragment extends Fragment{
-	private ImageLoader imageLoader;
+	
 	private Typeface regular;
 	public SettingsFragment(){
-		imageLoader = ImageLoader.getInstance();
-		imageLoader.init(Constants.config);
 	}
 	public static final SettingsFragment newInstance(){
 		SettingsFragment sf = new SettingsFragment();
@@ -36,6 +35,9 @@ public class SettingsFragment extends Fragment{
             Bundle savedInstanceState) {
 		if (isAdded()){
 			View rootView = inflater.inflate(R.layout.settings, container, false);
+			ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(container.getContext())
+	            .build();
+	        ImageLoader.getInstance().init(config);
 			if (regular == null)
 				regular = Typeface.createFromAsset(container.getContext().getAssets(), Constants.REGULAR);
 			
@@ -45,7 +47,7 @@ public class SettingsFragment extends Fragment{
 			school.setTypeface(regular);
 			
 			MLRoundedImageView profilePictureView = (MLRoundedImageView) rootView.findViewById(R.id.fbProfilePictureView);
-			imageLoader.displayImage(User.pictureURL, profilePictureView);
+			ImageLoader.getInstance().displayImage(User.pictureURL, profilePictureView);
 			LoginButton loginView = (LoginButton) rootView.findViewById(R.id.connectWithFbButton);
 			loginView.setBackgroundColor(getResources().getColor(R.color.uchicago));
 			loginView.setOnClickListener(new OnClickListener(){

@@ -11,12 +11,8 @@ class TestFragmentAdapter extends FragmentPagerAdapter {
     	"2"
     };
     protected final int[] IMAGES = new int[]{
-    	R.drawable.tutorial1,
-    	R.drawable.tutorial2,
-    	R.drawable.tutorial3,
-    	R.drawable.tutorial4,
-    	R.drawable.tutorial5,
-    	R.drawable.tutorial6
+    	R.drawable.home1,
+    	R.drawable.home2
     };
     private int mCount = IMAGES.length;
 

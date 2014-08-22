@@ -53,6 +53,7 @@ import com.facebook.Response;
 import com.facebook.Session;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 public class SingleListItem extends Activity{
     private Session activeSession;
     private String event_id;
@@ -200,8 +201,9 @@ public class SingleListItem extends Activity{
     		tvTag.setCompoundDrawablePadding(5);
         	llTags.addView(tvTag, 0);
         }
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getApplicationContext()).build();
         ImageLoader imageLoader = ImageLoader.getInstance();
-        imageLoader.init(Constants.config);
+        imageLoader.init(config);
         imageLoader.displayImage(cover_url, cover);
     }
     private boolean postToAPI(){

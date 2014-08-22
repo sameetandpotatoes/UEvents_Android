@@ -6,6 +6,7 @@ import java.util.List;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -27,6 +28,7 @@ public final class TestFragment extends Fragment {
 	private UiLifecycleHelper uiHelper;
 	private String mContent = "";
     private int drawableId;
+    private ImageView background;
     private Session mSession = null;
     public TestFragment(){
     }
@@ -87,7 +89,10 @@ public final class TestFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     	final View view = (View) inflater.inflate(R.layout.home_slide, container, false);
-    	ImageView background = (ImageView) view.findViewById(R.id.background);
+    	if (background != null){
+    		((BitmapDrawable)background.getDrawable()).getBitmap().recycle();
+    	}
+    	background = (ImageView) view.findViewById(R.id.background);
     	background.setImageResource(drawableId);
     	
     	List<String> permissions = Arrays.asList("email, public_profile, user_friends");

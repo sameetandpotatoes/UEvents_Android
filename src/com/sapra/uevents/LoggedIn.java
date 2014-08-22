@@ -50,10 +50,6 @@ public class LoggedIn extends FragmentActivity implements ActionBar.TabListener{
         final ActionBar actionbar = getActionBar();
         AppRater.app_launched(this);
         
-        // Create global configuration and initialize ImageLoader with this configuration
-        Constants.config = new ImageLoaderConfiguration.Builder(getApplicationContext())
-            .build();
-        
         setBounds();
         forceTabs();
         

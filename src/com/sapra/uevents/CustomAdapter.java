@@ -3,6 +3,7 @@ package com.sapra.uevents;
 import java.util.ArrayList;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 import android.content.Context;
 import android.graphics.Typeface;
@@ -21,8 +22,6 @@ public class CustomAdapter extends BaseAdapter {
     
     public CustomAdapter(ArrayList<Object> listView){
       this.data = listView;
-      imageLoader = ImageLoader.getInstance();
-      imageLoader.init(Constants.config);
     }
     /**
      * @return size of ListView
@@ -50,6 +49,9 @@ public class CustomAdapter extends BaseAdapter {
     	vh.position = position;
     	Event tempEvent = null;
     	Context context = parent.getContext();
+    	imageLoader = ImageLoader.getInstance();
+    	ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(context).build();
+        imageLoader.init(config);
 	    inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	    view = inflater.inflate(R.layout.list_item, parent, false);
         Typeface bold = Typeface.createFromAsset(context.getAssets(), Constants.BOLD);

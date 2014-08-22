@@ -3,6 +3,7 @@ package com.sapra.uevents;
 import com.facebook.Session;
 
 import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import android.widget.ImageView;
 
 public class TutorialFragment extends Fragment{
 	private int drawable;
+	private ImageView background;
 	public TutorialFragment(){
 		
 	}
@@ -29,8 +31,11 @@ public class TutorialFragment extends Fragment{
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     	final View view = (View) inflater.inflate(R.layout.home_slide_tutorial, container, false);
-    	ImageView background = (ImageView) view.findViewById(R.id.background);
-    	background.setImageResource(drawable);
+    	if(background != null) {
+    		((BitmapDrawable)background.getDrawable()).getBitmap().recycle();
+        }
+    	background = (ImageView) view.findViewById(R.id.background);
+        background.setImageResource(drawable);
     	if (drawable == R.drawable.tutorial6){
     		Button loginButton = (Button) view.findViewById(R.id.ok_got_it);
     		loginButton.setVisibility(View.VISIBLE);
