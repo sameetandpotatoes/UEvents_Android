@@ -66,7 +66,8 @@ public class LoginPage extends FragmentActivity {
 	        jsonObject.accumulate("email",User.email);
 	        jsonObject.accumulate("picture_url",User.pictureURL);
 	        jsonObject.accumulate("school_id", User.schoolId);
-
+	        jsonObject.accumulate("user", "");
+	        
             // 4. convert JSONObject to JSON to String
             json = jsonObject.toString();
 

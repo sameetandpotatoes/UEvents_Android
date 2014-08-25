@@ -20,4 +20,15 @@ public class Constants {
 	
 	public static int width;
 	public static int height;
+	
+	public static String getTag(int i){
+		switch(i){
+		case FOOD: return FOODTAG;
+		case MUSIC: return MUSICTAG;
+		case OFF_CAMPUS: return OFF_CAMPUSTAG;
+		case SPORTS: return SPORTSTAG;
+		case NIGHTLIFE: return NIGHTLIFETAG;
+		default: return "";
+		}
+	}
 }

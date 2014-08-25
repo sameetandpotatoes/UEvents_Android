@@ -48,6 +48,10 @@ public class EventsFragment extends Fragment {
 	}
 	public static final EventsFragment newInstance(String url, Session session, String tag){
 		EventsFragment ef = new EventsFragment();
+		
+		if (!(tag.equals("All") || tag.equals("My"))){
+			url += "&filter="+tag;
+		}
 		String noAnd = url.replaceAll(" & ", "%20%26%20");
 		String noSpaces = noAnd.replaceAll(" ", "%20");
 		ef.url = noSpaces;
@@ -121,8 +125,7 @@ public class EventsFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
 	    if (isAdded()){
-	    	((LoggedIn) getActivity()).setActionBarTitle("All Events", true);
-	    	if (context == null){
+	    	if (context == null){ //First time or resetting
 	    		context = getActivity().getApplicationContext();
 	    		bold = Typeface.createFromAsset(context.getAssets(), Constants.BOLD);
 	    	}

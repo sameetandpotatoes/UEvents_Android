@@ -38,6 +38,8 @@ public class Tag extends Fragment{
 	        imagebuttons[i]=(ImageButton) rootView.findViewById(ids[i]);
 	        imagebuttons[i].setOnClickListener(new View.OnClickListener() {
 	            public void onClick(View v) {
+	            	((LoggedIn) getActivity()).tagPos = 0;
+
 	            	ImageButton ib = ((ImageButton) v);
 	            	String tag = (String) ib.getTag();
 	            	
@@ -55,6 +57,7 @@ public class Tag extends Fragment{
 	            	else
 	            		position = 0;
 	            	((LoggedIn) getActivity()).getPCListener().onPageSelected(position);
+	            	((LoggedIn) getActivity()).tagPos = 0;
 	            }
 	        });
 		}

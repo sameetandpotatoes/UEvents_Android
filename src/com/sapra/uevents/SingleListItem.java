@@ -64,6 +64,8 @@ public class SingleListItem extends Activity{
         getActionBar().setDisplayHomeAsUpEnabled(true);
         getActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor(getResources().getString(R.color.uchicago))));
         setContentView(R.layout.single_list_item_view);
+        overridePendingTransition(R.anim.trans_left_in, R.anim.trans_left_out);
+        
         regular = Typeface.createFromAsset(getAssets(), Constants.REGULAR);
         bold = Typeface.createFromAsset(getAssets(), Constants.BOLD);
         alreadyCreatedEvent = false;
@@ -336,9 +338,8 @@ public class SingleListItem extends Activity{
 	public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
 	        case android.R.id.home:
-	        	onTrimMemory(TRIM_MEMORY_RUNNING_CRITICAL);
-	        	finish();
-	            return true;
+	        	onBackPressed();
+	        	return true;
 	        case R.id.menu_item_share:
 	        	shareEvent();
 	        	return true;
@@ -400,6 +401,11 @@ public class SingleListItem extends Activity{
     	super.onResume();
     	setBounds();
     	txtAttending.setWidth(Constants.width/3);
+    }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.trans_right_in, R.anim.trans_right_out);
     }
     private void shareEvent(){
         String shareBody = "Hey, I'm interested in " + selectedEvent.getRawName() + " at " + 

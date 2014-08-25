@@ -36,14 +36,16 @@ public class LoggedIn extends FragmentActivity implements ActionBar.TabListener{
 	private static boolean firstTime = true;
 	private static String tag = "";
 	private static String eventsURL, myEventsURL;
-	
+	public static int tagPos = 0;
 	PagerAdapter mPagerAdapter;
 	ViewPager mViewPager;
 	private ViewPager.SimpleOnPageChangeListener PCListener;
     public void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
         setContentView(R.layout.main_menu);
+        
         checkConnectivity();
+        
         final ActionBar actionbar = getActionBar();
         AppRater.app_launched(this);
         
@@ -63,28 +65,33 @@ public class LoggedIn extends FragmentActivity implements ActionBar.TabListener{
         
         mViewPager = (ViewPager) findViewById(R.id.viewPager);
         mViewPager.setOffscreenPageLimit(2);
-//        mViewPager.setOffscreenPageLimit(Constants.PAGES_COUNT);
         mViewPager.setAdapter(mPagerAdapter);
         PCListener = new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
-            	switch(position){
+            	if (tagPos == 0){
+            		tagPos = position;
+            	}
+//            	System.out.println("T: " + tagPos);
+            	switch(tagPos){
 	            	case 0: tag = "All Events"; break;
 	            	case 1: tag = "Tags"; break;
 	            	case 2: tag = User.firstName + "'s Events"; break;
 	            	case 3: tag = "Settings"; break;
-	            	case Constants.FOOD: tag = Constants.FOODTAG; break;
-	            	case Constants.NIGHTLIFE: tag = Constants.NIGHTLIFETAG; break;
-	            	case Constants.MUSIC: tag = Constants.MUSICTAG; break;
-	            	case Constants.OFF_CAMPUS: tag = Constants.OFF_CAMPUSTAG; break;
-	            	case Constants.SPORTS: tag = Constants.SPORTSTAG; break;
+	            	default: tag = Constants.getTag(position); break;
             	}
-            	setActionBarTitle(tag, true);
-            	if (position < 4)
-            		actionbar.setSelectedNavigationItem(position);
-            	else{
+            	if (tagPos < 4){
+            		actionbar.setSelectedNavigationItem(tagPos);
+            	}else{
             		actionbar.setSelectedNavigationItem(1);
-            		mViewPager.setCurrentItem(position);
+            		mViewPager.setCurrentItem(tagPos, false);
+            	}
+            	if (!(tagPos > position && position == 3)){
+//            		System.out.println(tagPos + " " + position + " " + tag);
+            		if (tagPos > 4){
+            			tag = Constants.getTag(tagPos);
+            		}
+            		setActionBarTitle(tag, true);
             	}
             	checkConnectivity();
             }
@@ -202,12 +209,12 @@ public class LoggedIn extends FragmentActivity implements ActionBar.TabListener{
 	}
 	public void onTabSelected(Tab arg0, FragmentTransaction arg1) {
 		mViewPager.setCurrentItem(arg0.getPosition());
+		tagPos = 0;
 	}
 	public void onTabUnselected(Tab arg0, FragmentTransaction arg1) {
 	}
 	/**
      * Handles log out of Facebook and redirects to login
-     *
      */
     public void onClickLogout() {
 	  Session session = Session.getActiveSession();
@@ -231,33 +238,26 @@ public class LoggedIn extends FragmentActivity implements ActionBar.TabListener{
         }
         @Override
         public Fragment getItem(int i) {
+        	if (tagPos > i && i == 4){
+         		i = tagPos;
+         	}
+//        	System.out.println("" + tagPos + " Getting item" + i);
         	switch(i){
 	        	case 0: //All Events
 	        		return EventsFragment.newInstance(eventsURL, session, "All");
-	        	case 1:
+	        	case 1: //Tags
 	        		return new Tag();
 	        	case 2: //My Events
 	        		return EventsFragment.newInstance(myEventsURL, session, "My");
-	        	case 3:
+	        	case 3: //Settings
 	        		return SettingsFragment.newInstance();
-	        	case Constants.FOOD:
-	        		return EventsFragment.newInstance(eventsURL+"&filter="+Constants.FOODTAG, session, Constants.FOODTAG);
-	        	case Constants.NIGHTLIFE:
-	        		return EventsFragment.newInstance(eventsURL+"&filter="+Constants.NIGHTLIFETAG, session, Constants.NIGHTLIFETAG);
-	        	case Constants.MUSIC:
-	        		return EventsFragment.newInstance(eventsURL+"&filter="+Constants.MUSICTAG, session, Constants.MUSICTAG);
-	        	case Constants.OFF_CAMPUS:
-	        		return EventsFragment.newInstance(eventsURL+"&filter="+Constants.OFF_CAMPUSTAG, session, Constants.OFF_CAMPUSTAG);
-	        	case Constants.SPORTS:
-	        		return EventsFragment.newInstance(eventsURL+"&filter="+Constants.SPORTSTAG, session, Constants.SPORTSTAG);
-	        	default:
-	        		return EventsFragment.newInstance(eventsURL, session, "All");
+	        	default: //All Tags
+	        		return EventsFragment.newInstance(eventsURL, session, Constants.getTag(i));
         	}
         }
-
         @Override
         public int getCount() {
-            return Constants.PAGES_COUNT;
+            return 5;
         }
         public int getIconTitle(int position) {
             switch(position){
