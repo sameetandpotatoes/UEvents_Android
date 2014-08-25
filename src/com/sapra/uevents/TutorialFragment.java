@@ -43,7 +43,6 @@ public class TutorialFragment extends Fragment{
 				@Override
 				public void onClick(View arg0) {
 					Intent events = new Intent(getActivity().getApplicationContext(), LoggedIn.class);
-					getActivity().onTrimMemory(getActivity().TRIM_MEMORY_RUNNING_CRITICAL);
 			    	events.putExtra("Session", Session.getActiveSession());
 			    	startActivity(events);
 			    	getActivity().finish();

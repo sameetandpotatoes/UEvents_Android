@@ -3,7 +3,7 @@ package com.sapra.uevents;
 import android.os.Build;
 
 public class ENVRouter {
-	public static final String prodENV = "http://uevents.192.168.1.75.xip.io:20559/";
+	public static final String prodENV = "http://uevents-staging.herokuapp.com/";
 	public static final String localENV = "http://uevents.192.168.1.75.xip.io:20559/";
 	public static final String myEventsURL = "api/v2/events/user.json";
 	public static final String eventsURL = "api/v2/events.json";

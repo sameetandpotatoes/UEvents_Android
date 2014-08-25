@@ -117,6 +117,7 @@ public class EventsFragment extends Fragment {
 	public void onDestroy(){
 		super.onDestroy();
 	}
+	@SuppressWarnings("deprecation")
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
 	    if (isAdded()){
@@ -180,7 +181,6 @@ public class EventsFragment extends Fragment {
 		}
 	}
 	public class GetEvents extends AsyncTask<Void, Integer, Boolean>{
-		@SuppressWarnings("unchecked")
 		private String tag;
 		public GetEvents(String tag){
 			this.tag = tag;

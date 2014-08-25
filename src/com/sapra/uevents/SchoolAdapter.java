@@ -2,6 +2,7 @@ package com.sapra.uevents;
 
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -14,9 +15,9 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 public class SchoolAdapter extends BaseAdapter{
-	private final ArrayList mData;
+	private final ArrayList<Object> mData;
     public SchoolAdapter(Context context, Map<String, String> map) {
-        mData = new ArrayList();
+        mData = new ArrayList<Object>();
         mData.addAll(map.entrySet());
     }
 
@@ -25,9 +26,10 @@ public class SchoolAdapter extends BaseAdapter{
         return mData.size();
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     public Map.Entry<String, String> getItem(int position) {
-        return (Map.Entry) mData.get(position);
+        return (Entry<String, String>) mData.get(position);
     }
 
     @Override

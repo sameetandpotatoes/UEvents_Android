@@ -18,7 +18,6 @@ public class Constants {
 	public static final String SPORTSTAG = "Sports";
 	public static final String NIGHTLIFETAG = "Nightlife";
 	
-//	public static ImageLoaderConfiguration config;
 	public static int width;
 	public static int height;
 }

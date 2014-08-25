@@ -31,7 +31,7 @@ public class Tag extends Fragment{
 	}
 	private void addImageButtonListeners(){
 		ImageButton button1 = null, button2 = null, button3 = null, button4 = null, button5 = null, button6 = null;
-        ImageButton imagebuttons[]={ button1, button2, button3, button4, button5};
+        ImageButton imagebuttons[]={ button1, button2, button3, button4, button5, button6};
         int ids[] = {R.id.all,R.id.food,R.id.nightlife,R.id.music, R.id.offcampus, R.id.sports};
 	    for(int i = 0; i < imagebuttons.length; i++)
 	    {

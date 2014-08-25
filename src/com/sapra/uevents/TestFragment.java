@@ -5,7 +5,6 @@ import java.util.List;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -26,7 +25,6 @@ import com.facebook.widget.LoginButton;
 public final class TestFragment extends Fragment {
     private LoginButton lb;
 	private UiLifecycleHelper uiHelper;
-	private String mContent = "";
     private int drawableId;
     private ImageView background;
     private Session mSession = null;
@@ -34,7 +32,6 @@ public final class TestFragment extends Fragment {
     }
     public static TestFragment newInstance(int imageId, String mContent){
     	TestFragment tf = new TestFragment();
-    	tf.mContent = mContent;
     	tf.drawableId = imageId;
     	return tf;
     }
@@ -43,6 +40,7 @@ public final class TestFragment extends Fragment {
         super.onCreate(savedInstanceState);
     	uiHelper = new UiLifecycleHelper(getActivity(), callback);
     	uiHelper.onCreate(savedInstanceState);
+    	
         Settings.addLoggingBehavior(LoggingBehavior.INCLUDE_ACCESS_TOKENS);
         Session session = Session.getActiveSession();
         if (session == null) {
@@ -90,7 +88,7 @@ public final class TestFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     	final View view = (View) inflater.inflate(R.layout.home_slide, container, false);
     	if (background != null){
-    		((BitmapDrawable)background.getDrawable()).getBitmap().recycle();
+    		((BitmapDrawable) background.getDrawable()).getBitmap().recycle();
     	}
     	background = (ImageView) view.findViewById(R.id.background);
     	background.setImageResource(drawableId);
@@ -131,18 +129,13 @@ public final class TestFragment extends Fragment {
 				mSession = session;
 				Log.i("API", "Getting user info");
 				((LoginPage) getActivity()).getUserInfo();
-//				if (((LoginPage) getActivity()).getUserInfo()){
-					if (((LoginPage) getActivity()).postToAPI()){
-						Log.i("API", "Logging in");
-						((LoginPage) getActivity()).loggedIn();
-					} else{
-						Log.i("API", "Going to university");
-						((LoginPage) getActivity()).university();
-					}
-//				} else{
-//					Log.i("API", "Already had user info");
-//					((LoginPage) getActivity()).loggedIn();
-//				}
+				if (((LoginPage) getActivity()).postToAPI()){
+					Log.i("API", "Logging in");
+					((LoginPage) getActivity()).loggedIn();
+				} else{
+					Log.i("API", "Going to university");
+					((LoginPage) getActivity()).university();
+				}
 			}
 		} else if (state.isClosed()) {
 			lb.setOnClickListener(new OnClickListener(){

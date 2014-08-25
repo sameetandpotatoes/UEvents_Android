@@ -1,10 +1,5 @@
 package com.sapra.uevents;
 
-import java.util.HashMap;
-
-import com.google.analytics.tracking.android.GoogleAnalytics;
-import com.google.analytics.tracking.android.Tracker;
-
 import android.app.Application;
 
 public class MyApplication extends Application{

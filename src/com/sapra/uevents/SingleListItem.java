@@ -22,17 +22,14 @@ import android.content.Intent;
 import android.content.pm.LabeledIntent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
-import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.provider.CalendarContract.Events;
-import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableString;
-import android.text.style.AbsoluteSizeSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.TextAppearanceSpan;
 import android.util.Log;
@@ -56,7 +53,6 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 public class SingleListItem extends Activity{
     private Session activeSession;
-    private String event_id;
 	private SegmentedRadioGroup segmentText;
 	private Event selectedEvent;
 	private String userId;
@@ -79,7 +75,7 @@ public class SingleListItem extends Activity{
         TextView txtStart = (TextView) findViewById(R.id.start);
         TextView txtLoc = (TextView) findViewById(R.id.location);
         txtAttending = (TextView) findViewById(R.id.attending);
-        TextView venue = (TextView) findViewById(R.id.venue);
+//        TextView venue = (TextView) findViewById(R.id.venue);
         ((RadioButton) findViewById(R.id.going)).setTypeface(regular);
         ((RadioButton) findViewById(R.id.interested)).setTypeface(regular);
         ((RadioButton) findViewById(R.id.notgoing)).setTypeface(regular);
@@ -103,7 +99,6 @@ public class SingleListItem extends Activity{
         String attending = selectedEvent.getAttending();
 //      String venue = selectedEvent.getVenue();
         ArrayList<String> tags = selectedEvent.getTags();
-        event_id = selectedEvent.getID();
         getRSVPStatus();
         txtName.setText(name);
         txtName.setTypeface(bold);
@@ -152,7 +147,7 @@ public class SingleListItem extends Activity{
 						((RadioButton) findViewById(checkedId)).setBackgroundColor(getResources().getColor(R.color.uchicago));
 						((RadioButton) findViewById(checkedId)).setTextColor(getResources().getColor(R.color.white));
 					} else{
-						Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
+						Toast.makeText(SingleListItem.this, "Error", Toast.LENGTH_SHORT).show();
 					}
 				}
 			}        	
@@ -341,7 +336,7 @@ public class SingleListItem extends Activity{
 	public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
 	        case android.R.id.home:
-	        	onTrimMemory(TRIM_MEMORY_UI_HIDDEN);
+	        	onTrimMemory(TRIM_MEMORY_RUNNING_CRITICAL);
 	        	finish();
 	            return true;
 	        case R.id.menu_item_share:
@@ -407,7 +402,6 @@ public class SingleListItem extends Activity{
     	txtAttending.setWidth(Constants.width/3);
     }
     private void shareEvent(){
-        Resources resources = getResources();
         String shareBody = "Hey, I'm interested in " + selectedEvent.getRawName() + " at " + 
         					selectedEvent.getLocation() +" ("+selectedEvent.getStart_time()+"). "+
         					"Want to join me?\n\nFind more events with UEvents, available on the Play Store."+

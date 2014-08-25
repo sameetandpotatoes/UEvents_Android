@@ -7,13 +7,11 @@ import android.app.ActionBar.Tab;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.FragmentTransaction;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.Point;
-import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -23,7 +21,7 @@ import android.os.Looper;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -32,7 +30,6 @@ import android.view.Display;
 
 import com.facebook.Session;
 import com.google.analytics.tracking.android.EasyTracker;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 public class LoggedIn extends FragmentActivity implements ActionBar.TabListener{
     
 	private static Session session;
@@ -65,7 +62,8 @@ public class LoggedIn extends FragmentActivity implements ActionBar.TabListener{
         actionbar.setHomeAsUpIndicator(R.drawable.nothing);
         
         mViewPager = (ViewPager) findViewById(R.id.viewPager);
-        mViewPager.setOffscreenPageLimit(Constants.PAGES_COUNT);
+        mViewPager.setOffscreenPageLimit(2);
+//        mViewPager.setOffscreenPageLimit(Constants.PAGES_COUNT);
         mViewPager.setAdapter(mPagerAdapter);
         PCListener = new ViewPager.SimpleOnPageChangeListener() {
             @Override
@@ -116,7 +114,8 @@ public class LoggedIn extends FragmentActivity implements ActionBar.TabListener{
      * Checks connectivity and displays dialog
      *
      */
-    private void checkConnectivity(){
+    @SuppressWarnings("deprecation")
+	private void checkConnectivity(){
     	if (!isConnected()){
     		AlertDialog ad = new AlertDialog.Builder(this).create();
 	 	    ad.setCancelable(false);
@@ -225,7 +224,7 @@ public class LoggedIn extends FragmentActivity implements ActionBar.TabListener{
         super.onResume();
         setBounds();
     }     
-    public static class PagerAdapter extends FragmentPagerAdapter {
+    public static class PagerAdapter extends FragmentStatePagerAdapter {
 
         public PagerAdapter(FragmentManager fm) {
             super(fm);

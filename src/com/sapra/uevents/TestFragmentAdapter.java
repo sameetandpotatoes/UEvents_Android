@@ -3,7 +3,6 @@ package com.sapra.uevents;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentStatePagerAdapter;
 
 class TestFragmentAdapter extends FragmentPagerAdapter {
     protected final String[] CONTENT = new String[] { 

@@ -1,8 +1,5 @@
 package com.sapra.uevents;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import org.json.JSONArray;
@@ -165,7 +162,8 @@ public class Event implements Parcelable {
             return new Event[size];
         }
     };
-    private Event(Parcel in){
+    @SuppressWarnings("unchecked")
+	private Event(Parcel in){
     	this.attending = in.readString();
     	this.id = in.readString();
     	this.cover_url = in.readString();

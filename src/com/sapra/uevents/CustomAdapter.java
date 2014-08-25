@@ -19,7 +19,6 @@ public class CustomAdapter extends BaseAdapter {
     private ArrayList<Object> data;
     private LayoutInflater inflater=null;
     private ImageLoader imageLoader;
-    
     public CustomAdapter(ArrayList<Object> listView){
       this.data = listView;
     }
@@ -69,6 +68,7 @@ public class CustomAdapter extends BaseAdapter {
 				when.setWidth(Constants.width/3);
 	            when.setText(tempEvent.getStart_time());
 	            where.setText(tempEvent.getLocation());
+	            //Position could have changed if scrolling fast
 	            if (vh.position == position)
 	            	imageLoader.displayImage(tempEvent.getCover_url(), thumb_image);
 	    	}
