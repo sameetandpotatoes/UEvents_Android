@@ -47,6 +47,7 @@ public class LoggedIn extends FragmentActivity implements ActionBar.TabListener{
         checkConnectivity();
         
         final ActionBar actionbar = getActionBar();
+        
         AppRater.app_launched(this);
         
         setBounds();
@@ -64,7 +65,7 @@ public class LoggedIn extends FragmentActivity implements ActionBar.TabListener{
         actionbar.setHomeAsUpIndicator(R.drawable.nothing);
         
         mViewPager = (ViewPager) findViewById(R.id.viewPager);
-        mViewPager.setOffscreenPageLimit(2);
+//        mViewPager.setOffscreenPageLimit(1);
         mViewPager.setAdapter(mPagerAdapter);
         PCListener = new ViewPager.SimpleOnPageChangeListener() {
             @Override
@@ -232,7 +233,9 @@ public class LoggedIn extends FragmentActivity implements ActionBar.TabListener{
         setBounds();
     }     
     public static class PagerAdapter extends FragmentStatePagerAdapter {
-
+    	private EventsFragment allEvents, userEvents;
+    	private Tag tag;
+    	private SettingsFragment sf;
         public PagerAdapter(FragmentManager fm) {
             super(fm);
         }
@@ -241,16 +244,29 @@ public class LoggedIn extends FragmentActivity implements ActionBar.TabListener{
         	if (tagPos > i && i == 4){
          		i = tagPos;
          	}
-//        	System.out.println("" + tagPos + " Getting item" + i);
         	switch(i){
 	        	case 0: //All Events
-	        		return EventsFragment.newInstance(eventsURL, session, "All");
+	        		if (allEvents == null){
+	        			System.out.println("Fragment was null");
+	        			allEvents = EventsFragment.newInstance(eventsURL, session, "All"); 
+	        		}
+	        		return allEvents;
 	        	case 1: //Tags
-	        		return new Tag();
+	        		if (tag == null){
+	        			tag = new Tag();
+	        		}
+	        		return tag;
 	        	case 2: //My Events
-	        		return EventsFragment.newInstance(myEventsURL, session, "My");
+	        		if (userEvents == null){
+	        			System.out.println("Fragment was null");
+	        			userEvents = EventsFragment.newInstance(myEventsURL, session, "My"); 
+	        		}
+	        		return userEvents;
 	        	case 3: //Settings
-	        		return SettingsFragment.newInstance();
+	        		if (sf == null){
+	        			sf = SettingsFragment.newInstance(); 
+	        		}
+	        		return sf;
 	        	default: //All Tags
 	        		return EventsFragment.newInstance(eventsURL, session, Constants.getTag(i));
         	}

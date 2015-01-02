@@ -16,8 +16,8 @@ public class AppRater {
     private final static String APP_TITLE = "UEvents";
     private final static String APP_PNAME = "com.sapra.uevents";
     
-    private final static int DAYS_UNTIL_PROMPT = 5;
-    private final static int LAUNCHES_UNTIL_PROMPT = 1;
+    private final static int DAYS_UNTIL_PROMPT = 0;
+    private final static int LAUNCHES_UNTIL_PROMPT = 0;
     
     /**
      * Records when user launches app

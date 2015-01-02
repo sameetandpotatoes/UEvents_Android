@@ -42,7 +42,7 @@ public class EventsFragment extends Fragment {
 	private Session session;
 	private SwipeRefreshLayout swipeView;
 	private String tag;
-	private Typeface bold;
+	private Typeface regular;
 	public EventsFragment(){
 		listView = new ArrayList<Object>();
 	}
@@ -96,9 +96,9 @@ public class EventsFragment extends Fragment {
 						if (possibleTextView instanceof TextView){
 							date.setText(((TextView) possibleTextView).getText());
 						}
-			            boolean firstItemVisible = lv.getFirstVisiblePosition() == 0;
-			            boolean topOfFirstItemVisible = lv.getChildAt(0).getTop() == 0;
-			            swipeRefreshEnabled = firstItemVisible && topOfFirstItemVisible;
+//			            boolean firstItemVisible = lv.getFirstVisiblePosition() == 0;
+//			            boolean topOfFirstItemVisible = lv.getChildAt(0).getTop() == 0;
+//			            swipeRefreshEnabled = firstItemVisible && topOfFirstItemVisible;
 					} catch(NullPointerException n){	
 					} catch(IndexOutOfBoundsException i){
 					}
@@ -127,32 +127,40 @@ public class EventsFragment extends Fragment {
 	    if (isAdded()){
 	    	if (context == null){ //First time or resetting
 	    		context = getActivity().getApplicationContext();
-	    		bold = Typeface.createFromAsset(context.getAssets(), Constants.BOLD);
+	    		regular = Typeface.createFromAsset(context.getAssets(), Constants.REGULAR);
 	    	}
 	        View rootView = inflater.inflate(R.layout.activity, container, false);
 	        date = (TextView) rootView.findViewById(R.id.static_date);
-	        date.setTypeface(bold);
+	        date.setTypeface(Typeface.createFromAsset(context.getAssets(), Constants.BOLD));
 	        lv = (ListView) rootView.findViewById(android.R.id.list);
 	        swipeView = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe);
 	        swipeView.setColorScheme(
-	        		R.color.swipeOne,
-	        		R.color.swipeTwo,
-	        		R.color.swipeThree,
-	        		R.color.swipeFour);
+	        		R.color.uchicago,
+	        		R.color.uchicago,
+	        		R.color.normal_gray,
+	        		R.color.normal_gray);
 	        swipeView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
 	            @Override
 	            public void onRefresh() {
 	            	getEvents();
 	            }
 	        });
-	        getEvents();
-	        bold = null;
+	        if (listView.size() == 0)
+	        	getEvents();
+	        else{
+	        	adapter = new CustomAdapter(listView);
+	    		lv.setAdapter(adapter);
+	    		adapter.notifyDataSetChanged();
+	    		setListeners();
+	        }
+	        regular = null;
 	        return rootView;
 	    } else {
 	    	return null;
 	    }
 	}
 	public void getEvents(){
+		
 		swipeView.setRefreshing(true);
         getActivity().runOnUiThread(new Runnable(){
         	public void run(){
@@ -168,6 +176,7 @@ public class EventsFragment extends Fragment {
     	        			System.out.println("Context is null");
     	        		}
         				swipeView.setRefreshing(false);
+        				
         			}
         		}, 1500);
         	}

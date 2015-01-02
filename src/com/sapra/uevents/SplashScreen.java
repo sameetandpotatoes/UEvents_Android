@@ -16,9 +16,7 @@ public class SplashScreen extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        getActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#8F3931")));
-        getActionBar().setIcon(android.R.color.transparent);
-        getActionBar().setTitle("");
+        getActionBar().hide();
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {

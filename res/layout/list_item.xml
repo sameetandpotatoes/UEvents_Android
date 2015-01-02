@@ -12,7 +12,7 @@
 	 	    	android:textSize="20sp"
 	 	    	android:paddingLeft="10dp"
 	 	    	android:paddingTop="5dp"
-	 	    	android:background="#F7F7F7"
+	 	    	android:background="@color/normal_gray"
 	 	    	android:textColor="@color/uchicago" />
 	<RelativeLayout
 			    android:id="@+id/event"

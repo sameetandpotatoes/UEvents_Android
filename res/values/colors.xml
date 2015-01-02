@@ -10,9 +10,5 @@
     <color name="uchicago_dark">#762f28</color>
 	<color name="getstarted">#155F83</color>
 	<color name="getstarted_light">#1a74a0</color>
-	
-	<color name="swipeOne">#116978</color>
-	<color name="swipeTwo">#7d0101</color>
-	<color name="swipeThree">#c16622</color>
-	<color name="swipeFour">#3d5f82</color>
+	<color name="normal_gray">#F7F7F7</color>
 </resources>
